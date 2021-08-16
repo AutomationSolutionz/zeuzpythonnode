@@ -1639,7 +1639,7 @@ def run_command(data_set):
     sModuleInfo = inspect.currentframe().f_code.co_name + " : " + MODULE_NAME
 
     try:
-        commands = []
+        commands =[]
         run_in_background = False
         strip_whitespaces = True
         variable_name = None
@@ -3947,3 +3947,80 @@ def extract_num_from_str(
         out_variable_value = in_variable_value
 
     return out_variable_value
+
+
+@logger
+def g_auth_generator(data_set):
+    """Executes the given command.
+
+    Args:
+        data_set:
+        --------
+        auth generator       | utility action     | variable_name
+
+    Returns:
+        The result is stored in a shared variable.
+
+        "passed" if successful.
+        "zeuz_failed" otherwise.
+    """
+
+    sModuleInfo = inspect.currentframe().f_code.co_name + " : " + MODULE_NAME
+
+    try:
+        commands ='powershell -Command "~/Downloads/gauth/gauth.exe -csv"'
+        run_in_background = True
+        variable_name = None
+
+        for left, mid, right in data_set:
+            left = left.strip().lower()
+            if "auth generator" == left:
+                variable_name = right.strip()
+
+        if  variable_name is None:
+            CommonUtil.ExecLog(
+                sModuleInfo, "Variable name and commands must be provided.", 3
+            )
+            return "zeuz_failed"
+
+        args = {"shell": True, "stdin": None, "stdout": None, "stderr": None}
+
+        if run_in_background:
+            args.update(
+                {
+                    "stdin": subprocess.PIPE,
+                    "stdout": subprocess.PIPE,
+                    "stderr": subprocess.STDOUT,
+                }
+            )
+        CommonUtil.ExecLog(sModuleInfo, "Running Command: '%s'" % (commands), 1)
+        proc = subprocess.Popen(commands, **args)
+
+        if run_in_background:
+            proc.wait()
+
+        return_code = proc.returncode
+        output = ""
+
+        # Parse the output and decode from bytes to str
+        try:
+            for line in proc.stdout:
+                line = line.decode()
+                line = line.strip()
+
+                output += line
+        except:
+            # Could not parse any output
+            pass
+
+        CommonUtil.ExecLog(sModuleInfo, "Command output:\n%s" % output, 5)
+
+
+        output= output.split(',')
+        variable_output=output[2]
+        Shared_Resources.Set_Shared_Variables(variable_name, variable_output)
+
+        return "passed"
+    except:
+        CommonUtil.ExecLog(sModuleInfo, "Failed to run command.", 3)
+        return CommonUtil.Exception_Handler(sys.exc_info())
