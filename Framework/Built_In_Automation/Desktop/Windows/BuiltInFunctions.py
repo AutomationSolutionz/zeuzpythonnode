@@ -53,13 +53,14 @@ if Shared_Resources.Test_Shared_Variables("dependency"):  # Check if driver is a
     dependency = Shared_Resources.Get_Shared_Variables("dependency")  # Retreive appium driver
 
 recur_count = 0  # To be deleted
-common_sleep = 0
+unnecessary_sleep = 0
+gui_action_sleep = 2
 
 
 @logger
 def go_to_desktop(data_set):
     sModuleInfo = inspect.currentframe().f_code.co_name + " : " + MODULE_NAME
-    Element = Element_only_search(None, ["Show desktop", ""], ["TrayShowDesktopButtonWClass", ""], None, None, 0)[0]
+    Element = Element_only_search(None, None, ["Show desktop", ""], ["TrayShowDesktopButtonWClass", ""], None, None, 0)[0]
     if Element == "zeuz_failed":
         CommonUtil.ExecLog(sModuleInfo, "Could not find element", 3)
         return "zeuz_failed"
@@ -90,7 +91,8 @@ def Click_Element(data_set):
         for left, mid, right in data_set:
             right = right.strip().lower()
             left = left.strip().lower()
-            expand = not (left == "method" and right == "collapse")
+            if left == "method" and right == "collapse":
+                expand = False
 
     except Exception:
         CommonUtil.ExecLog(sModuleInfo, "You have provided an invalid Click data.  Please refer to help", 3)
@@ -662,14 +664,12 @@ def _child_search_by_path(
 @logger
 def Get_Element(data_set, wait_time=10, Parent_Element=None):
     """ Top function for searching an element """
-
     sModuleInfo = inspect.currentframe().f_code.co_name + " : " + MODULE_NAME
 
     element_name, window_name, element_class, element_automation, element_control, element_path, elem = None, None, None, None, None, "", False
     parent_name, parent_class, parent_automation, parent_control, parent = None, None, None, None, False
     sibling_name, sibling_class, sibling_automation, sibling_control, sibling = None, None, None, None, False
     element_index = 0
-    # parse dataset and read data
     try:
         for left, mid, right in data_set:
             left = left.strip().lower()
@@ -716,7 +716,7 @@ def Get_Element(data_set, wait_time=10, Parent_Element=None):
         if sibling and (sibling_name, sibling_class, sibling_automation, sibling_control) == (None, None, None, None):
             CommonUtil.ExecLog(sModuleInfo, "We support only 'Window', 'Name', 'ClassName', 'LocalizedControlType', 'AutomationId'", 3)
             return "zeuz_failed"
-        if window_name is None and Parent_Element is None:
+        if window_name is None and Parent_Element is None and not element_path:
             CommonUtil.ExecLog(sModuleInfo, "You should provide 'Window' otherwise the search won't be efficient", 2)
 
         s = time.time()
@@ -744,8 +744,9 @@ def Get_Element(data_set, wait_time=10, Parent_Element=None):
                     Parent_Element, window_name, element_name, element_class, element_automation, element_control, element_index
                 )
 
-            if -len(all_elements) <= element_index < len(all_elements) or time.time() > s + wait_time:
+            if all_elements != "zeuz_failed" and -len(all_elements) <= element_index < len(all_elements) or time.time() > s + wait_time:
                 break
+            time.sleep(0.5)   # Sleep is needed. dont need unlimited searching
 
         if all_elements == "zeuz_failed":
             CommonUtil.ExecLog(sModuleInfo, "Could not find the element", 3)
@@ -753,7 +754,10 @@ def Get_Element(data_set, wait_time=10, Parent_Element=None):
         if Parent_Element is not None:
             return all_elements
         if -len(all_elements) <= element_index < len(all_elements):
-            CommonUtil.ExecLog(sModuleInfo, "Returning the element of index = %d" % element_index, 1)
+            if element_index == 0:
+                CommonUtil.ExecLog(sModuleInfo, "Returning the 1st element that is found", 1)
+            else:
+                CommonUtil.ExecLog(sModuleInfo, "Returning the element of index = %d" % element_index, 1)
         else:
             CommonUtil.ExecLog(sModuleInfo, "Index out of range", 3)
             return "zeuz_failed"
@@ -864,21 +868,21 @@ def Click_Element_None_Mouse(Element, Expand=True):
                 # Invoking actions
                 elif pattern_name == "Invoke":
                     CommonUtil.ExecLog(sModuleInfo, "Invoking the object", 1)
-                    time.sleep(1)
+                    time.sleep(unnecessary_sleep)
                     Element.GetCurrentPattern(InvokePattern.Pattern).Invoke()
                     return "passed"
                 # Selection of an item
                 elif pattern_name == "SelectionItem":
                     CommonUtil.ExecLog(sModuleInfo, "Selecting an item", 1)
                     Element.GetCurrentPattern(SelectionItemPattern.Pattern).Select()
-                    time.sleep(1)
+                    time.sleep(unnecessary_sleep)
                     return "passed"
                 # Toggling action
 
                 elif pattern_name == "Toggle":
                     CommonUtil.ExecLog(sModuleInfo, "Toggling an item", 1)
                     Element.GetCurrentPattern(TogglePattern.Pattern).Toggle()
-                    time.sleep(1)
+                    time.sleep(unnecessary_sleep)
                     return "passed"
                 # if no patterns are found, then we do an actual mouse click
                 else:
@@ -901,7 +905,7 @@ def Click_Element_None_Mouse(Element, Expand=True):
                     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, x, y, 0, 0)
                     time.sleep(0.1)
                     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, x, y, 0, 0)
-                    time.sleep(1)
+                    time.sleep(unnecessary_sleep)
                     return "passed"
 
         CommonUtil.ExecLog(sModuleInfo, "Unable to perform the action on the object", 3)
@@ -983,6 +987,19 @@ def Double_Click_Element(data_set):
         Element = Get_Element(data_set)
         if Element == "zeuz_failed":
             return "zeuz_failed"
+
+        patter_list = Element.GetSupportedPatterns()
+        if len(patter_list) > 0:
+            for each in patter_list:
+                pattern_name = Automation.PatternName(each)
+                CommonUtil.ExecLog(sModuleInfo, "Pattern name attached to the current element is: %s " % pattern_name, 1)
+                if pattern_name == "Invoke":
+                    CommonUtil.ExecLog(sModuleInfo, "Double Invoking the object", 1)
+                    Element.GetCurrentPattern(InvokePattern.Pattern).Invoke()
+                    time.sleep(0.1)
+                    Element.GetCurrentPattern(InvokePattern.Pattern).Invoke()
+                    return "passed"
+
         x = int(
             Element.Current.BoundingRectangle.Right
             - Element.Current.BoundingRectangle.Width / 2
@@ -998,6 +1015,7 @@ def Double_Click_Element(data_set):
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, x, y, 0, 0)
         time.sleep(0.1)
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, x, y, 0, 0)
+        return "passed"
     except Exception:
         return CommonUtil.Exception_Handler(sys.exc_info(), None, "Error parsing data set")
 
@@ -1020,7 +1038,7 @@ def Hover_Over_Element(data_set):
         win32api.SetCursorPos((x, y))
 
         autoit.mouse_move(x, y, speed=20)
-        time.sleep(1)
+        time.sleep(unnecessary_sleep)
         return "passed"
     except Exception:
         return CommonUtil.Exception_Handler(sys.exc_info(), None, "Error parsing data set")
@@ -1071,13 +1089,13 @@ def Save_Attribute(data_set):
         if "value" in field:
             actual_text = str(Element.GetCurrentPattern(ValuePattern.Pattern).Current.Value).strip()
         elif "name" in field:
-            actual_text = str(Element.GetCurrentPattern(ValuePattern.Pattern).Current.Name).strip()
+            actual_text = str(Element.Current.Name).strip()
         elif "class" in field:
-            actual_text = str(Element.GetCurrentPattern(ValuePattern.Pattern).Current.ClassName).strip()
-        elif "id" in field:
-            actual_text = str(Element.GetCurrentPattern(ValuePattern.Pattern).Current.AutomationId).strip()
+            actual_text = str(Element.Current.ClassName).strip()
+        elif "id" in field or "automation" in field:
+            actual_text = str(Element.Current.AutomationId).strip()
         elif "type" in field or "control" in field:
-            actual_text = str(Element.GetCurrentPattern(ValuePattern.Pattern).Current.LocalizedControlType).strip()
+            actual_text = str(Element.Current.LocalizedControlType).strip()
 
         Shared_Resources.Set_Shared_Variables(variable_name, actual_text)
 
@@ -1132,13 +1150,13 @@ def Enter_Text_In_Text_Box(data_set):
     sModuleInfo = inspect.currentframe().f_code.co_name + " : " + MODULE_NAME
     try:
         text = ""
-        keystroke = True
+        keystroke = False
 
         for left, mid, right in data_set:
             if mid.lower().strip() == "action":
                 text = right
-            elif left.lower().strip() == "method" and right.lower().strip() == "set value":
-                keystroke = False
+            elif left.lower().strip() == "method" and right.lower().strip() == "keystroke":
+                keystroke = True
 
         Element = Get_Element(data_set)
         if Element == "zeuz_failed":
@@ -1163,10 +1181,10 @@ def Enter_Text_In_Text_Box(data_set):
         else:
             try:
                 CommonUtil.ExecLog(sModuleInfo, "Trying to set the value by ValuePattern", 1)
-                time.sleep(common_sleep)
+                time.sleep(unnecessary_sleep)
                 Element.GetCurrentPattern(ValuePattern.Pattern).SetValue(text)
             except:
-                time.sleep(common_sleep)
+                time.sleep(0.5)
                 autoit.send("^a")
                 autoit.send(text)
                 CommonUtil.ExecLog(
@@ -1197,7 +1215,7 @@ def Scroll(data_set):
         win32api.SetCursorPos((x, y))
 
         autoit.mouse_wheel("up", 10)
-        time.sleep(1)
+        time.sleep(unnecessary_sleep)
     except Exception:
         return CommonUtil.Exception_Handler(sys.exc_info(), None, "Error parsing data set")
 
@@ -1255,7 +1273,6 @@ def Keystroke_For_Element(data_set):
     sModuleInfo = inspect.currentframe().f_code.co_name + " : " + MODULE_NAME
 
     try:
-        time.sleep(2)
         keystroke_value = ""
         keystroke_char = ""
         method_name = "pyautogui"
@@ -1279,6 +1296,7 @@ def Keystroke_For_Element(data_set):
         return CommonUtil.Exception_Handler(sys.exc_info(), None, errMsg)
 
     try:
+        time.sleep(gui_action_sleep)
         if method_name == 'pyautogui':
             try:
                 if keystroke_char != "":
