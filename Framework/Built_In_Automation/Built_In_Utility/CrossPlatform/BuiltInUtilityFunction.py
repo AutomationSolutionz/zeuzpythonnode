@@ -3971,13 +3971,16 @@ def g_auth_generator(data_set):
         commands ='powershell -Command "~/Downloads/gauth/gauth.exe -csv"'
         run_in_background = True
         variable_name = None
+        account_id = None
 
         for left, mid, right in data_set:
             left = left.strip().lower()
             if "auth generator" == left:
                 variable_name = right.strip()
+            if "login account id" == left:
+                account_id = right.strip()
 
-        if  variable_name is None:
+        if  variable_name is None or account_id is None:
             CommonUtil.ExecLog(
                 sModuleInfo, "Variable name and commands must be provided.", 3
             )
@@ -4007,20 +4010,20 @@ def g_auth_generator(data_set):
             for line in proc.stdout:
                 line = line.decode()
                 line = line.strip()
+                if line.split(',')[0]== account_id:
+                    output += line.split(',')[2]
+                    CommonUtil.ExecLog(sModuleInfo, "Command output:\n%s" % line, 5)
+                    Shared_Resources.Set_Shared_Variables(variable_name, output)
 
-                output += line
+            if output == "":
+                raise Exception("Given account id is not synced with authenticator")
+            else :
+                return 'Pass'
+
         except:
-            # Could not parse any output
-            pass
+            CommonUtil.ExecLog(sModuleInfo, "Given account id is not synced with authenticator.", 3)
+            return 'fail'
 
-        CommonUtil.ExecLog(sModuleInfo, "Command output:\n%s" % output, 5)
-
-
-        output= output.split(',')
-        variable_output=output[2]
-        Shared_Resources.Set_Shared_Variables(variable_name, variable_output)
-
-        return "passed"
     except:
         CommonUtil.ExecLog(sModuleInfo, "Failed to run command.", 3)
         return CommonUtil.Exception_Handler(sys.exc_info())
