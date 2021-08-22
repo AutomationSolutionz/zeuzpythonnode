@@ -3968,7 +3968,8 @@ def g_auth_generator(data_set):
     sModuleInfo = inspect.currentframe().f_code.co_name + " : " + MODULE_NAME
 
     try:
-        commands ='powershell -Command "~/Downloads/gauth/gauth.exe -csv"'
+        path = os.getcwd().split("Framework")[0]+"Apps"+os.sep+"gauth"+os.sep+"gauth.exe"
+        commands ='powershell -Command "'+path+ ' -csv\"'
         run_in_background = True
         variable_name = None
         account_id = None
