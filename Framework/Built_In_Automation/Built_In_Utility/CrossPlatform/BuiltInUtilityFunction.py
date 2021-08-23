@@ -4019,12 +4019,11 @@ def g_auth_generator(data_set):
             if output == "":
                 raise Exception("Given account id is not synced with authenticator")
             else :
-                return 'Pass'
+                return 'passed'
 
         except:
             CommonUtil.ExecLog(sModuleInfo, "Given account id is not synced with authenticator.", 3)
-            return 'fail'
+            return 'zeuz_failed'
 
     except:
-        CommonUtil.ExecLog(sModuleInfo, "Failed to run command.", 3)
         return CommonUtil.Exception_Handler(sys.exc_info())
