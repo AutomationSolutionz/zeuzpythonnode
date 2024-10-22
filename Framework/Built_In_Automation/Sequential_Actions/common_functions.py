@@ -26,7 +26,9 @@ from html_diff import diff
 from imap_tools import MailBox
 import re
 from typing import List
-
+import socket
+import signal
+import os
 
 try:
     import xlwings as xw
@@ -6742,7 +6744,6 @@ def stop_ssh_tunnel(data_set):
     
 @logger
 def proxy_server(data_set):
-    import os
     sModuleInfo = inspect.currentframe().f_code.co_name + " : " + MODULE_NAME
 
     proxy_var = None
@@ -6756,12 +6757,20 @@ def proxy_server(data_set):
         if left.lower().strip() == 'proxy server':
             proxy_var = right.strip()
     
-    if action == None:
+    if action is None:
         CommonUtil.ExecLog(sModuleInfo, "Incorrect dataset", 3)
         return "zeuz_failed"
 
+    def is_port_in_use(port):
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+            return sock.connect_ex(('localhost', port)) == 0
 
     if action == 'start':        
+        # Check if the port is already in use
+        if is_port_in_use(port):
+            CommonUtil.ExecLog(sModuleInfo, f"Port {port} is already in use.", 3)
+            return "zeuz_failed"
+
         CommonUtil.ExecLog(sModuleInfo, f"{action.capitalize()}ing proxy server on port {port}", 1)
 
         proxy_log_dir = Path(sr.Get_Shared_Variables("zeuz_download_folder")).parent / 'proxy_log'
@@ -6771,7 +6780,8 @@ def proxy_server(data_set):
         CommonUtil.ExecLog(sModuleInfo, f"Proxy Log file: {output_file_path}", 1)
 
         captured_network_file_path = proxy_log_dir / 'captured_network_data.csv'
-        CommonUtil.ExecLog(sModuleInfo, f"Captured Network file: {output_file_path}", 1)
+        CommonUtil.ExecLog(sModuleInfo, f"Captured Network file: {captured_network_file_path}", 1)
+
         # Open the output file in append mode
         with open(r'{}'.format(output_file_path), 'a') as output_file:
             # Start the subprocess
@@ -6793,19 +6803,18 @@ def proxy_server(data_set):
         CommonUtil.mitm_proxy_pids.append(pid)
         CommonUtil.ExecLog(sModuleInfo, f"Started process with PID: {pid}", 1)
 
-        sr.Set_Shared_Variables(proxy_var, {"pid":pid,"captured_network_file_path":captured_network_file_path,"log_file":output_file_path})
+        sr.Set_Shared_Variables(proxy_var, {"pid": pid, "captured_network_file_path": captured_network_file_path, "log_file": output_file_path})
         return "passed"
     else:
-        import signal
-        
+        # Action is stop
         if CommonUtil.mitm_proxy_pids:
             try:
                 pid = CommonUtil.mitm_proxy_pids[0]
                 os.kill(pid, signal.SIGTERM)
-                CommonUtil.ExecLog(sModuleInfo,f"Process with PID {pid} has been terminated.",1)
+                CommonUtil.ExecLog(sModuleInfo, f"Process with PID {pid} has been terminated.", 1)
                 CommonUtil.mitm_proxy_pids.pop()
             except OSError as e:
-                CommonUtil.ExecLog(sModuleInfo,f"Error: {e}", 3)
+                CommonUtil.ExecLog(sModuleInfo, f"Error: {e}", 3)
 
         CommonUtil.ExecLog(sModuleInfo, f"{action.capitalize()}ing proxy server on port {port}", 1)
         return "passed"
