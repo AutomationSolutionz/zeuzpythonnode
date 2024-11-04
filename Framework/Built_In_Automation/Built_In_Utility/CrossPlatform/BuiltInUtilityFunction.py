@@ -2358,27 +2358,22 @@ def compare_images(data_set):
             import skimage, cv2, imutils
             from skimage.metrics import structural_similarity as ssim
 
-        score = 'score'
-
+        var_name = 'score'
         default_ssim = float(1)
+        result_folder = ConfigModule.get_config_value(
+            "sectionOne", "screen_capture_folder", temp_config
+        )
 
-        for eachrow in data_set:
-            if eachrow[1] == "compare":
-                imageA_path = eachrow[0].strip()
-                imageB_path = eachrow[2].strip()
-                # imageA_path = Shared_Resources.get_previous_response_variables_in_strings(
-                #     eachrow[0].strip()
-                # )
-                # imageB_path = Shared_Resources.get_previous_response_variables_in_strings(
-                #     eachrow[2].strip()
-                # )
-            elif eachrow[1] == "element parameter":
-                if eachrow[0] == "min match score":
-                    user_ssim = float(
-                        eachrow[2]
-                    )  # User defined minimum match score (i.e. SSIM)
-            elif 'action' in eachrow[1]:
-                score = eachrow[2].strip()
+        for left, mid, right in data_set:
+            if mid == "compare":
+                imageA_path = CommonUtil.path_parser(left.strip())
+                imageB_path = CommonUtil.path_parser(right.strip())
+            elif left == "min match score":
+                user_ssim = float(right)  # User defined minimum match score (i.e. SSIM)
+            elif left == "result folder":
+                result_folder = CommonUtil.path_parser(right.strip())
+            elif 'action' in mid:
+                var_name = right.strip()
 
         imageA = cv2.imread(imageA_path)  # Read first image
         imageB = cv2.imread(imageB_path)  # Read second image
@@ -2423,10 +2418,6 @@ def compare_images(data_set):
             cv2.rectangle(imageB, (x, y), (x + w, y + h), (0, 0, 255), 2)
 
         # show an output concatenated result comparing the two images and their difference
-
-        result_folder = ConfigModule.get_config_value(
-            "sectionOne", "screen_capture_folder", temp_config
-        )
         result_name = "final_image"
         timestamp = datetime.datetime.now().strftime("%Y-%m-%dT%H-%M-%S-%f")
         final_result_location = (
@@ -2450,7 +2441,7 @@ def compare_images(data_set):
 
         # Perform the image comparison based on the structural similarity index
 
-        Shared_Resources.Set_Shared_Variables(score, ssim_match)
+        Shared_Resources.Set_Shared_Variables(var_name, ssim_match)
         print('Score:',ssim_match)
         if ssim_match >= req_ssim:
             CommonUtil.ExecLog(sModuleInfo, "Images match", 1)
