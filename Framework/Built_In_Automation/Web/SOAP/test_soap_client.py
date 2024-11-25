@@ -1,4 +1,6 @@
+import json
 from zeep import Client
+from zeep.helpers import serialize_object
 from zeep.cache import SqliteCache
 from zeep.transports import Transport
 from requests import Session
@@ -44,10 +46,23 @@ def main():
                 ]
             },
             "shipping_address": "123 Main St, Cattie Residential area, Earth",
-        }
+        },
+        "priority": True,
     }
     resp = client.service.process_order(**order_dict)
     print(type(resp), resp)
+
+    resp = client.service.get_orders_by_customer("Shadow Purr")
+    print(type(resp))
+    print(resp)
+
+    serialized_resp = serialize_object(resp)
+    print(type(serialized_resp))
+    print(serialized_resp)
+
+    to_py_types = json.loads(json.dumps(serialized_resp))
+    print(to_py_types)
+
 
 if __name__ == "__main__":
     main()
