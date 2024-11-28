@@ -6302,7 +6302,7 @@ def data_store_insert_column(data_set):
 
 
 @logger
-def xml_to_json(data_set):
+def xml_to_dict(data_set):
     """
     """
     import xmltodict
@@ -6311,36 +6311,45 @@ def xml_to_json(data_set):
 
     try:
         filepath = None
-        json_var_name = None
+        var_name = None
+        xml_data = None
 
         for left, mid, right in data_set:
             left = left.lower()
             if "file path" in left:
                 filepath = right.strip()
                 filepath = Path(CommonUtil.path_parser(filepath))
-            if "xml to json" in left:
-                json_var_name = right.strip()
+            if "xml to dict" in left:
+                var_name = right.strip()
+            if "xml data" in left:
+                xml_data = right
 
-        if None in (filepath,json_var_name):
-            CommonUtil.ExecLog(sModuleInfo, "Please specify both filename and json variable name", 3)
+        if None in (filepath,var_name):
+            CommonUtil.ExecLog(sModuleInfo, "Please specify both filename and variable name", 3)
 
-        if filepath != None and filepath.is_file():
-            try:
-                with open(filepath) as xml_file:
-                    data_dict = xmltodict.parse(xml_file.read())
-                result = sr.Set_Shared_Variables(json_var_name, data_dict)
-                return result
-            except:
-                CommonUtil.ExecLog(sModuleInfo, "Couldn't read and convert the xml file", 3)
+        if filepath is not None:
+            if filepath.is_file():
+                try:
+                    with open(filepath) as xml_file:
+                        data_dict = xmltodict.parse(xml_file.read())
+                    result = sr.Set_Shared_Variables(var_name, data_dict)
+                    return result
+                except:
+                    CommonUtil.ExecLog(sModuleInfo, "Couldn't read and convert the xml file", 3)
+                    return "zeuz_failed"
+            else:
+                CommonUtil.ExecLog(sModuleInfo, "Invalid file path - the given path does not represent a readable file", 3)
                 return "zeuz_failed"
-
-
-
+        elif xml_data is not None:
+            data_dict = xmltodict.parse(xml_data)
+            result = sr.Set_Shared_Variables(var_name, data_dict)
+            return result
         else:
-            CommonUtil.ExecLog(sModuleInfo, "Specified file couldn't be found or downloaded from attachment", 3)
+            CommonUtil.ExecLog(sModuleInfo, "Please specify either the 'xml data' or 'file path' parameters", 3)
             return "zeuz_failed"
 
     except:
+        CommonUtil.ExecLog(sModuleInfo, "Failed to parse XML into dictionary.", 3)
         return CommonUtil.Exception_Handler(sys.exc_info())
 
 
