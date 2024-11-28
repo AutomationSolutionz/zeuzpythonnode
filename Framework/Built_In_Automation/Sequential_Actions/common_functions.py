@@ -6324,9 +6324,6 @@ def xml_to_dict(data_set):
             if "xml data" in left:
                 xml_data = right
 
-        if None in (filepath,var_name):
-            CommonUtil.ExecLog(sModuleInfo, "Please specify both filename and variable name", 3)
-
         if filepath is not None:
             if filepath.is_file():
                 try:
