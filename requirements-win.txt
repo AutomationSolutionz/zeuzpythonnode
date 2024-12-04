@@ -73,3 +73,5 @@ thefuzz
 genson
 google-cloud-storage
 mitmproxy
+jinja2
+spyne

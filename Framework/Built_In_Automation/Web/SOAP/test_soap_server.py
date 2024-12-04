@@ -172,4 +172,4 @@ def index():
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
     logging.getLogger("spyne.protocol.xml").setLevel(logging.DEBUG)
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=15000)
