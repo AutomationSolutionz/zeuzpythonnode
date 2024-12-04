@@ -6844,6 +6844,7 @@ def render_jinja_template(data_set):
         data_input: dict[str, Any] = {}
         settings: dict[str, Any] = {}
         variable_name: str | None = None
+        print_output: bool = True
 
         # Parse inputs from data_set
         for left, mid, right in data_set:
@@ -6863,6 +6864,8 @@ def render_jinja_template(data_set):
                     settings = CommonUtil.parse_value_into_object(right.strip())
                 except:  # noqa: E722
                     settings = {}
+            elif "print output" in left:
+                print_output = CommonUtil.parse_value_into_object(right.strip()) is True
 
         # Validate required inputs
         if not template_text:
@@ -6887,9 +6890,10 @@ def render_jinja_template(data_set):
         sr.Set_Shared_Variables(variable_name, rendered_output)
 
         # Log the rendered template
-        CommonUtil.ExecLog(
-            sModuleInfo, f"Rendered Output:\n{rendered_output}", 5
-        )
+        if print_output:
+            CommonUtil.ExecLog(
+                sModuleInfo, f"Rendered Output:\n{rendered_output}", 5
+            )
         return "passed"
 
     except Exception:
