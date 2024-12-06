@@ -6818,3 +6818,81 @@ def proxy_server(data_set):
 
         CommonUtil.ExecLog(sModuleInfo, f"{action.capitalize()}ing proxy server on port {port}", 1)
         return "passed"
+
+@logger
+def json_to_csv(data_set):
+    """Save JSON file into CSV file.
+
+    Accepts any valid JSON data in file.
+
+    Args:
+        data_set:
+          input json file    | element parameter  | Path to the input JSON file.
+          json to csv        | common action      | Path to the output CSV file.
+
+    Returns:hello_name(data_set):
+        "passed" if success.
+        "zeuz_failed" otherwise.
+    """
+    sModuleInfo = inspect.currentframe().f_code.co_name + " : " + MODULE_NAME
+
+    try:
+        json_file = None
+        variable_name = None
+        csv_file = None
+        success = None
+
+        try:
+            for left, mid, right in data_set:
+                left = left.strip().lower()
+                if "input json file" in left:
+                    json_file = right.strip().lower()
+                elif "action" in mid:
+                    csv_file = right.strip()
+
+            if None in (json_file,csv_file):
+                CommonUtil.ExecLog(sModuleInfo, "Please specify both filename and json variable name", 3)
+        except:
+            CommonUtil.ExecLog(sModuleInfo, "Failed to parse data.", 3)
+            traceback.print_exc()
+            return "zeuz_failed"
+        try:
+            success = do_json_to_csv(json_file, csv_file)
+            if(success):
+                CommonUtil.ExecLog(sModuleInfo, "Successfully Saved JSON file into CSV file", 1)
+                return "passed"
+            return "zeuz_failed" 
+        except Exception as e:
+            return CommonUtil.Exception_Handler(sys.exc_info())
+    except:
+        return CommonUtil.Exception_Handler(sys.exc_info())
+
+@logger
+def do_json_to_csv(json_file, csv_file):
+    """
+    Convert a JSON file to a CSV file.
+    
+    :param json_file: Path to the input JSON file.
+    :param csv_file: Path to the output CSV file.
+    """
+    try:
+        # Open and load the JSON file
+        with open(json_file, 'r') as jf:
+            data = json.load(jf)
+
+        # Check if JSON data is a list of dictionaries
+        if isinstance(data, list) and all(isinstance(item, dict) for item in data):
+            # Open the CSV file for writing
+            with open(csv_file, 'w', newline='', encoding='utf-8') as cf:
+                writer = csv.DictWriter(cf, fieldnames=data[0].keys())
+                writer.writeheader()
+                writer.writerows(data)
+            print(f"Successfully converted JSON to CSV at {csv_file}")
+            return True
+        else:
+            print("JSON file does not contain a list of dictionaries.")
+            return False
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return False
