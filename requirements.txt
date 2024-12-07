@@ -54,3 +54,4 @@ pyperclip
 genson
 google-cloud-storage
 mitmproxy
+json_to_csv
