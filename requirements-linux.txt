@@ -59,3 +59,4 @@ thefuzz
 genson
 google-cloud-storage
 mitmproxy
+wapiti3 #security
