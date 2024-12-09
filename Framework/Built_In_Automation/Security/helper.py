@@ -35,3 +35,24 @@ def display_table(data: list, headers: list, title: str = "Report") -> None:
     """
     print(f"\n{title.center(60, '-')}\n")
     print(tabulate(data, headers=headers, tablefmt="fancy_grid"))
+
+
+def save_report_to_file(output: str, file_path: str) -> None:
+    """
+    Args:
+        output (str): The content to save to the file.
+        file_path (str): The file path where the content should be saved.
+    Raises:
+        Exception: If the file cannot be written.
+    """
+    try:
+        # Ensure the directory exists
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        
+        # Write the output to the file
+        with open(file_path, "w") as file:
+            file.write(output.strip())
+        
+        print(f"Report saved successfully to {file_path}")
+    except Exception as e:
+        print(f"Failed to save report to {file_path}: {e}")

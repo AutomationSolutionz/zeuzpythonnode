@@ -8,7 +8,7 @@ from tabulate import tabulate
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from arachni_download import check_and_install_arachni
 from arachni_run import run_arachni_scan, generate_report_from_afr
-from helper import extract_target, check_perl_installed, display_table
+from helper import extract_target, check_perl_installed, display_table, save_report_to_file
 
 
 def port_scaning_nmap(data_set: list) -> str:
@@ -23,12 +23,14 @@ def port_scaning_nmap(data_set: list) -> str:
 
     target_url = next(item[2] for item in data_set if item[0] == "target")
     nmap_action = next(item[2] for item in data_set if item[0] == "nmap")
-
     target = extract_target(target_url)
     command = ["nmap", nmap_action, target]
 
     try:
         result = subprocess.run(command, capture_output=True, text=True, check=True)
+        output_file_path = "/home/antu/Desktop/nmap_scan_result.txt"
+        save_report_to_file(result.stdout, output_file_path)
+
         success_data = [
             ["Command", " ".join(command)],
             ["Output", result.stdout.strip()],
@@ -114,7 +116,6 @@ def server_scaning_nikto(data_set: list) -> str:
                 ["Command", "sudo apt install perl"]
             ]
             display_table(installation_data, headers=["Message", "Details"], title="Perl Installation (Linux)")
-        
         return "zeuz_failed"
 
     # Check if the nikto.pl file exists at the correct path
@@ -132,6 +133,10 @@ def server_scaning_nikto(data_set: list) -> str:
     # Construct the Nikto command and execute it
         nikto_command = ["perl", NIKTO_SCRIPT_PATH, "-h", nikto_target]
         result = subprocess.run(nikto_command, check=True)
+        
+        output_file_path = "/home/antu/Desktop/nikto_scan_result.txt"
+        save_report_to_file(result.stdout, output_file_path)
+
         print(result.stdout)  # Print the output of the Nikto scan
         return "passed"
     except subprocess.CalledProcessError as e:
