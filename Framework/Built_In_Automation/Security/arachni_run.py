@@ -2,7 +2,7 @@ import os
 import subprocess
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-BASE_DIR = os.path.abspath(os.path.join(CURRENT_DIR, "../../../.."))
+BASE_DIR = os.path.abspath(os.path.join(CURRENT_DIR, "../../.."))
 ARACHNI_DIR = os.path.join(BASE_DIR, "tools", "security", "arachni")
 ARACHNI_EXECUTABLE = os.path.join(ARACHNI_DIR, "bin", "arachni")
 ARACHNI_REPORTER_EXECUTABLE = os.path.join(ARACHNI_DIR, "bin", "arachni_reporter")

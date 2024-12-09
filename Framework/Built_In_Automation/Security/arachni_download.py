@@ -5,7 +5,7 @@ import shutil
 from tqdm import tqdm
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-BASE_DIR = BASE_DIR = os.path.normpath(os.path.abspath(os.path.join(CURRENT_DIR, "../../../..")))
+BASE_DIR = BASE_DIR = os.path.normpath(os.path.abspath(os.path.join(CURRENT_DIR, "../../..")))
 ARACHNI_DIR = os.path.join(BASE_DIR, "tools", "security", "arachni")
 RELEASES_API = "https://api.github.com/repos/Arachni/arachni/releases/latest"
 
