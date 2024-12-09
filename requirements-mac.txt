@@ -63,3 +63,4 @@ thefuzz
 genson
 google-cloud-storage
 mitmproxy
+tabulate
