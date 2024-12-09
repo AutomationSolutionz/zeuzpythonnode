@@ -1,11 +1,25 @@
 import os
 import subprocess
+import shutil
 import sys
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from arachni_download import check_and_install_arachni
 from arachni_run import run_arachni_scan, generate_report_from_afr
 
 def port_scaning_nmap(data_set: list) -> str:
+    if not shutil.which("nmap"):
+        table = (
+            "+----------------+---------------------------------------------+\n"
+            "| Message        | Details                                     |\n"
+            "+----------------+---------------------------------------------+\n"
+            "| Error          | nmap is not installed on your system.       |\n"
+            "| Solution       | Please install it from the following link:  |\n"
+            "| Download Link  | https://nmap.org/download.html              |\n"
+            "+----------------+---------------------------------------------+"
+        )
+        print(table)
+        return "zeuz_failed"
+    
     target = next(item[2] for item in data_set if item[0] == 'target')
     nmap_action = next(item[2] for item in data_set if item[0] == 'nmap')
     command = ["nmap", nmap_action, target]
