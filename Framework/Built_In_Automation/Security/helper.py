@@ -1,0 +1,37 @@
+import os
+import subprocess
+import shutil
+import sys
+from urllib.parse import urlparse
+from tabulate import tabulate
+
+
+def extract_target(url: str) -> str:
+    """
+    Extracts and cleans the target from a given URL to ensure compatibility with nmap.
+    """
+    parsed_url = urlparse(url)
+    target = parsed_url.hostname or parsed_url.netloc
+    if target.startswith("www."):
+        target = target[4:]
+    return target
+
+
+def check_perl_installed() -> bool:
+    """
+    Checks if Perl is installed on the system by running 'perl -v'.
+    """
+    try:
+        # Try running 'perl -v' to check if Perl is installed
+        subprocess.run(["perl", "-v"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+        return True
+    except subprocess.CalledProcessError:
+        return False
+
+
+def display_table(data: list, headers: list, title: str = "Report") -> None:
+    """
+    Display a formatted table in the terminal.
+    """
+    print(f"\n{title.center(60, '-')}\n")
+    print(tabulate(data, headers=headers, tablefmt="fancy_grid"))
