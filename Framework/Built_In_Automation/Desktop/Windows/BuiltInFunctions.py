@@ -2086,6 +2086,17 @@ def _open_inspector(inspector, args):
 
 @logger
 def Run_Application(data_set):
+    """
+    size	                        |   optional parameter  |	** Example: 1920,1080 **
+    location                        |	optional parameter  |	** Example: 0,0 **
+    maximize                        |	optional parameter  |	** yes/no **
+    relaunch/launch another         |	optional parameter  |	** yes/no **
+    keypress interval               |   optional parameter  |	** It will by default wait 0.5 sec for the keypress interval. Example: 0.2 **
+    wait for launch                 |	optional parameter  |	** It will by default wait 10 sec for the app to launch. Example: 20 **
+    open app                        |	windows action      |	Example:
+                                                                >> Outlook
+                                                                >> ~/Desktop/server.exe
+    """
     sModuleInfo = inspect.currentframe().f_code.co_name + " : " + MODULE_NAME
     global current_pid_list
     current_pid_list = []
@@ -2093,6 +2104,7 @@ def Run_Application(data_set):
         args = {"shell": True, "stdin": None, "stdout": None, "stderr": None}
         launch_cond = ""
         Desktop_app = ""
+        keypress_interval = 0.5
         size, top_left, maximize = None, None, False
         wait = Shared_Resources.Get_Shared_Variables("element_wait")
         for left, mid, right in data_set:
@@ -2117,7 +2129,9 @@ def Run_Application(data_set):
                 launch_cond = "relaunch"
             elif "launchagain" in left and yes_cond:
                 launch_cond = "launchagain"
-            elif "wait" == left:
+            elif "keypressinterval" in left and r != None:
+                keypress_interval = float(r)
+            elif left == "wait" or left == "waitforlaunch":
                 wait = float(r)
 
         if not launch_cond and len(pygetwindow.getWindowsWithTitle(Desktop_app)) > 0:
@@ -2133,13 +2147,13 @@ def Run_Application(data_set):
                 cmd = f'''{Desktop_app[:2]} && cd "{os.path.dirname(Desktop_app)}" && start cmd.exe /K "{Desktop_app}\"'''
                 CommonUtil.ExecLog(sModuleInfo, "Running following cmd:\n" + cmd, 1)
                 subprocess.Popen(cmd, **args)
-                # Desktop_app = os.path.basename(Desktop_app)
+                # Desktop_app = os.path.basename(Desktop_app)Notepad
             else:
                 #last_start_time = time.time()
                 autoit.send("^{ESC}")
-                time.sleep(0.5)
+                time.sleep(keypress_interval)
                 autoit.send(Desktop_app)
-                time.sleep(0.5)
+                time.sleep(keypress_interval)
                 autoit.send("{ENTER}")
                 CommonUtil.ExecLog(sModuleInfo, "Successfully launched your app", 1)
                 time.sleep(2)
