@@ -147,6 +147,11 @@ def load_sa_modules(
             from Framework.Built_In_Automation.Performance_Testing import (
                 BuiltInFunctions as performance,
             )
+        elif module == "security":
+            global security
+            from Framework.Built_In_Automation.Security import (
+                BuiltInFunctions as security
+            )
         else:
             CommonUtil.ExecLog(
                 sModuleInfo, "Invalid sequential actions module: %s" % module, 3
