@@ -2147,7 +2147,7 @@ def Run_Application(data_set):
                 cmd = f'''{Desktop_app[:2]} && cd "{os.path.dirname(Desktop_app)}" && start cmd.exe /K "{Desktop_app}\"'''
                 CommonUtil.ExecLog(sModuleInfo, "Running following cmd:\n" + cmd, 1)
                 subprocess.Popen(cmd, **args)
-                # Desktop_app = os.path.basename(Desktop_app)Notepad
+                # Desktop_app = os.path.basename(Desktop_app)
             else:
                 #last_start_time = time.time()
                 autoit.send("^{ESC}")
