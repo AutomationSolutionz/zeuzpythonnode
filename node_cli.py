@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # -*- coding: cp1252 -*-
-import os
+import os, sys
 import shutil
 from pathlib import Path
 from urllib.parse import urlparse
@@ -24,9 +24,14 @@ with open(version_path, "r"):
     text = text[text.find("=")+1:].split("\n")[0].strip()
     if os.name == "nt":
         os.system("title " + "Python " + platform.python_version() + "(" + platform.architecture()[0] + ")" + " -- ZeuZ Node " + text)
-    print(version_path.read_text().strip())
-    print("[Python version]")
-    print("Python " + platform.python_version() + "(" + platform.architecture()[0] + ")\n")
+    # ToDo: Uncomment when we start node versioning properly
+    # print(version_path.read_text().strip())
+
+print("[Python version]")
+print("Python " + platform.python_version() + "(" + platform.architecture()[0] + ")\n")
+print("[Python Executable]")
+print(sys.executable)
+
 from Framework.module_installer import check_min_python_version, install_missing_modules,update_outdated_modules
 
 check_min_python_version(min_python_version="3.11",show_warning=True)

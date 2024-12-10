@@ -2134,7 +2134,7 @@ def main(device_dict, all_run_id_info):
                                 sModuleInfo, "Performance Test Results Uploaded Successfully", 1
                             )
                         except Exception as e:
-                            CommonUtil.ExecLog(sModuleInfo, e, 3)
+                            CommonUtil.ExecLog(sModuleInfo, str(e), 3)
                             run_test_case(
                                 test_case_no,
                                 sModuleInfo,
