@@ -1,5 +1,6 @@
 import inspect
 import json
+import time
 import subprocess
 import platform
 from pathlib import Path
@@ -21,6 +22,7 @@ def lorust_performance_action_handler(
     sModuleInfo = inspect.currentframe().f_code.co_name + " : " + MODULE_NAME
 
     actions_to_execute: List[int] = []
+    teststarttime = time.perf_counter()
     try:
         spawn_rate = "1"
         max_tasks = None
@@ -206,9 +208,9 @@ def lorust_performance_action_handler(
                 "sectionOne",
                 "temp_run_file_path",
                 temp_ini_file,
-            )) / run_id.replace(":", "-") / CommonUtil.current_session_name
+            )) / run_id.replace(":", "-") / CommonUtil.current_session_name / CommonUtil.current_tc_no
 
-        metrics_output_path = save_path / "metrics"
+        metrics_output_path = save_path / "lorust_performance_report"
         metrics_output_path.mkdir(parents=True, exist_ok=True)
 
         flow_save_path = metrics_output_path / "flow.json"
@@ -241,6 +243,9 @@ def lorust_performance_action_handler(
             f"--flow-path {flow_save_path}",
         ]), shell=True)
 
+        testendtime = time.perf_counter()
+        duration = testendtime - teststarttime
+
         CommonUtil.performance_testing = False
         CommonUtil.ExecLog(
             sModuleInfo,
@@ -249,12 +254,62 @@ def lorust_performance_action_handler(
         )
 
         process_lorust_metrics(metrics_output_json_path)
+        create_html_report(
+            run_id=run_id, # type: ignore
+            tc_id=CommonUtil.current_tc_no,
+            report_save_path=metrics_output_path,
+            teststarttime=teststarttime,
+            testendtime=testendtime,
+            duration=duration,
+        )
     except:
         import traceback
         traceback.print_exc()
 
     # TODO: Return the performance data
     return "passed", actions_to_execute
+
+
+def create_html_report(
+    run_id: str,
+    tc_id: str,
+    report_save_path: Path,
+    teststarttime: float,
+    testendtime: float,
+    duration: float,
+):
+    sModuleInfo = inspect.currentframe().f_code.co_name + " : " + MODULE_NAME
+    from jinja2 import Environment, FileSystemLoader
+
+    processed_performance_data = CommonUtil.generate_time_based_performance_report(
+        run_id=run_id,
+        tc_id=tc_id,
+        teststarttime=teststarttime,
+        testendtime=testendtime,
+        duration=duration,
+        perf_data=CommonUtil.api_performance_data,
+    )
+
+    env = Environment(loader=FileSystemLoader('../reporting/html_templates'))
+    template = env.get_template("lorust_perf_report.html")
+    html = template.render(processed_performance_data)
+
+    step_no: int = CommonUtil.current_step_sequence # type: ignore
+    action_no: int = CommonUtil.current_action_no # type: ignore
+    file_name = report_save_path / f"{tc_id}_STEP-{step_no}_ACTION-{action_no}.html"
+
+    with open(file_name, "w", encoding="utf-8") as file:
+        file.write(html)
+
+    CommonUtil.ExecLog(
+        sModuleInfo,
+        "Lorust performance report generated successfully. "
+        "Download the report from RunID > Test case > Download Logs.",
+        1,
+    )
+
+    try: CommonUtil.processed_performance_data.clear()
+    except: pass
 
 
 def process_lorust_metrics(metrics_path):
