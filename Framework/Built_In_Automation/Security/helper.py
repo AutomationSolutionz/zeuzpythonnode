@@ -1,4 +1,3 @@
-import os
 import subprocess
 import shutil
 import sys
@@ -49,12 +48,13 @@ def save_report_to_file(output: str, directory: Path, filename: str) -> None:
         Exception: If the file cannot be written.
     """
     try:
-        os.makedirs(directory, exist_ok=True)
+        directory.mkdir(parents=True, exist_ok=True)
         file_path = directory / filename
         
-        with open(file_path, "w") as file:
+        with file_path.open("w") as file:
             file.write(output.strip())
         
         print(f"Report saved successfully to {file_path}")
     except Exception as e:
         print(f"Failed to save report to {directory}: {e}")
+
