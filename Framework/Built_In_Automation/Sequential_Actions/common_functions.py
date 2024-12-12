@@ -52,6 +52,8 @@ from datetime import timedelta
 from .utility import send_email, check_latest_received_email, delete_mail, save_mail,random_mail_factory
 import re
 import subprocess
+import pandas
+
 months = [
     "Unknown",
     "January",
@@ -6318,6 +6320,7 @@ def xml_to_json(data_set):
             if "file path" in left:
                 filepath = right.strip()
                 filepath = Path(CommonUtil.path_parser(filepath))
+
             if "xml to json" in left:
                 json_var_name = right.strip()
 
@@ -6725,7 +6728,78 @@ def start_ssh_tunnel(data_set):
         CommonUtil.ExecLog(sModuleInfo, f"SSH Tunnel is established", 1)
         return "passed"
 
+@logger
+def json_to_csv(data_set):
+    """convert json to csv
 
+    Accepts any valid JSON data.
+
+    Args:
+        data_set:
+          data               | input parameter  | json data
+          filepath           | input parameter  | json filepath
+          json to csv        | common action    | filepath
+
+    Returns:
+        "passed" if success.
+        "zeuz_failed" otherwise.
+    """
+
+    sModuleInfo = inspect.currentframe().f_code.co_name + " : " + MODULE_NAME
+
+    try:
+        json_filepath = None
+        csv_filepath = None
+        json_data = None
+
+        for left, mid, right in data_set:
+            left = left.lower()
+            if "filepath" in left:
+                json_filepath = right.strip()
+                json_filepath = Path(CommonUtil.path_parser(json_filepath))
+            
+            if "data" in left:
+                json_data = right.strip()
+                
+            if "json to csv" in left:
+                csv_filepath = right.strip()
+        
+
+        if csv_filepath == None:
+            CommonUtil.ExecLog(sModuleInfo, "Please specify csv variable name or filepath", 3)
+        if json_filepath == None and json_data == None:
+            CommonUtil.ExecLog(sModuleInfo, "Please specify json filepath or data", 3)
+        if json_filepath != None and json_data != None:
+            CommonUtil.ExecLog(sModuleInfo, "Both json filepath and data is specified. This action will priotarize the filepath", 2)
+
+        if (json_filepath != None and json_filepath.is_file()) or json_data != None :
+            try:
+                if (json_filepath != None):
+                    with open(json_filepath, 'r') as json_file: 
+                        data_dict = json.load(json_file) 
+                else: 
+                    data_dict = CommonUtil.parse_value_into_object(json_data) 
+
+                # Convert the list of dictionaries to a DataFrame
+                df = pandas.DataFrame(data_dict)
+
+                df.to_csv(csv_filepath, index=False, encoding='utf-8')
+
+                CommonUtil.ExecLog(sModuleInfo, "Data successfully writen in CSV file", 1)
+                return "passed"
+                
+            except:
+                CommonUtil.ExecLog(sModuleInfo, "Couldn't read and convert the json file", 3)
+                return "zeuz_failed"
+
+
+
+        else:
+            CommonUtil.ExecLog(sModuleInfo, "Specified file couldn't be found or downloaded from attachment", 3)
+            return "zeuz_failed"
+
+    except:
+        return CommonUtil.Exception_Handler(sys.exc_info())
     
 @logger
 def stop_ssh_tunnel(data_set):
@@ -6818,3 +6892,4 @@ def proxy_server(data_set):
 
         CommonUtil.ExecLog(sModuleInfo, f"{action.capitalize()}ing proxy server on port {port}", 1)
         return "passed"
+    

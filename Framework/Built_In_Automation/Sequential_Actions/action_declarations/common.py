@@ -56,6 +56,7 @@ declarations = (
     { "name": "global sleep",                                "function": "global_sleep",                          "screenshot": "none" },
     { "name": "start ssh tunnel",                            "function": "start_ssh_tunnel",                      "screenshot": "none" },
     { "name": "stop ssh tunnel",                             "function": "stop_ssh_tunnel",                       "screenshot": "none" },
+    { "name": "json to csv",                                 "function": "json_to_csv",                           "screenshot": "none" },
 
     # Mail actions
     { "name": "send mail",                                   "function": "send_mail",                             "screenshot": "none" },
