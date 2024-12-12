@@ -6732,7 +6732,7 @@ def start_ssh_tunnel(data_set):
 def json_to_csv(data_set):
     """convert json to csv
 
-    Accepts any valid JSON data.
+    Accepts list of dictionaries type data.
 
     Args:
         data_set:
@@ -6766,36 +6766,35 @@ def json_to_csv(data_set):
         
 
         if csv_filepath == None:
-            CommonUtil.ExecLog(sModuleInfo, "Please specify csv variable name or filepath", 3)
-        if json_filepath == None and json_data == None:
+            CommonUtil.ExecLog(sModuleInfo, "Please specify csv filepath", 3)
+            return "zeuz_failed"
+        if json_filepath is None and json_data is None:
             CommonUtil.ExecLog(sModuleInfo, "Please specify json filepath or data", 3)
-        if json_filepath != None and json_data != None:
+            return "zeuz_failed"
+        if json_filepath is not None and json_filepath.is_file() is False and json_data is None:
+            CommonUtil.ExecLog(sModuleInfo, "Can not find the json file in specified filepath", 3)
+            return "zeuz_failed"
+        if json_filepath is not None and json_data is not None:
             CommonUtil.ExecLog(sModuleInfo, "Both json filepath and data is specified. This action will priotarize the filepath", 2)
 
-        if (json_filepath != None and json_filepath.is_file()) or json_data != None :
-            try:
-                if (json_filepath != None):
-                    with open(json_filepath, 'r') as json_file: 
-                        data_dict = json.load(json_file) 
-                else: 
-                    data_dict = CommonUtil.parse_value_into_object(json_data) 
+        try:
+            if json_filepath is not None:
+                with open(json_filepath, 'r') as json_file: 
+                    data_dict = json.load(json_file) 
+            else: 
+                data_dict = CommonUtil.parse_value_into_object(json_data) 
 
-                # Convert the list of dictionaries to a DataFrame
-                df = pandas.DataFrame(data_dict)
+            # Convert the list of dictionaries to a DataFrame
+            df = pandas.DataFrame(data_dict)
 
-                df.to_csv(csv_filepath, index=False, encoding='utf-8')
+            #save the dataframe to the file pointed by csv_filepath
+            df.to_csv(csv_filepath, index=False, encoding='utf-8')
 
-                CommonUtil.ExecLog(sModuleInfo, "Data successfully writen in CSV file", 1)
-                return "passed"
-                
-            except:
-                CommonUtil.ExecLog(sModuleInfo, "Couldn't read and convert the json file", 3)
-                return "zeuz_failed"
-
-
-
-        else:
-            CommonUtil.ExecLog(sModuleInfo, "Specified file couldn't be found or downloaded from attachment", 3)
+            CommonUtil.ExecLog(sModuleInfo, "Data successfully writen in CSV file", 1)
+            return "passed"
+            
+        except:
+            CommonUtil.ExecLog(sModuleInfo, "Couldn't read and convert the json file", 3)
             return "zeuz_failed"
 
     except:
