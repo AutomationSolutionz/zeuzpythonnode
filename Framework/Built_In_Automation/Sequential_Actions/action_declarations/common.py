@@ -112,6 +112,7 @@ declarations = (
     {"name": "extract text from pdf",                        "function": "extract_text_from_pdf",                 "screenshot": "none" },
     {"name": "search text and font",                         "function": "search_text_and_font",                  "screenshot": "none" },
     {"name": "read scanned pdf",                             "function": "extract_text_from_scanned_pdf",         "screenshot": "none" },
+    {"name": "json to csv",                                  "function": "json_to_csv",                           "screenshot": "none" },
 
     # Authenticator code generator action
     {"name": "authenticator code generator",                 "function": "authenticator_code_generator",          "screenshot": "none" },
@@ -131,7 +132,7 @@ declarations = (
 
     {"name": "connect to google service client",            "function": "connect_to_google_service_account",     "screenshot": "none" },
     {"name": "upload to google storage bucket",             "function": "upload_to_google_storage_bucket",       "screenshot": "none" },
-
+   
     {"name": "proxy server",                                "function": "proxy_server",                         "screenshot": "none"}
     
 ) # yapf: disable
