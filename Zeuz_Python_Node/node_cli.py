@@ -425,59 +425,6 @@ def update_machine_info(node_id, should_print=True):
     })
     RequestFormatter.Get("update_machine_with_time_api", {"machine_name": node_id})
 
-import sys
-import os
-import platform
-from plyer import notification
-
-def get_icon_path():
-    """
-    Returns the appropriate icon path based on the operating system.
-    Icon files are located in:
-    'Zeuz_Python_Node/Apps/Web/aiplugin/icons/' relative to this script.
-    """
-    # Get the directory where this script is located
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-
-    # Base relative path to the icons directory
-    icons_dir = os.path.join(
-        script_dir,
-        'Zeuz_Python_Node', 'Apps', 'Web', 'aiplugin', 'icons'
-    )
-
-    # Detect the operating system
-    system = platform.system()
-    if system == 'Windows':
-        icon_filename = 'small_logo_window.ico'
-    elif system == 'Darwin':
-        icon_filename = 'small_logo_mac.icns'
-    elif system == 'Linux':
-        icon_filename = 'small_logo.png' 
-    else:
-        icon_filename = 'small_logo.png'
-
-    # Construct the full icon path
-    icon_path = os.path.join(icons_dir, icon_filename)
-    icon_path = os.path.normpath(icon_path)
-
-    # Check if the icon file exists
-    if os.path.exists(icon_path):
-        return icon_path
-    else:
-        return None
-
-# Get the icon path using the get_icon_path() function
-icon_path = get_icon_path()
-
-# Send the notification when run Completed
-def notify_complete() :
-    notification.notify(
-        title="Zeuz Test Case Run",
-        message="Your run has completed.",
-        app_icon=icon_path,  # Use the icon path returned by get_icon_path()
-        timeout=7,
-    )
-
 
 def RunProcess(node_id, run_once=False, log_dir=None):
     try:
@@ -557,14 +504,13 @@ def RunProcess(node_id, run_once=False, log_dir=None):
                 return False
 
             print("[deploy] Run complete.")
-            notify_complete()
             return False
 
         def cancel_callback():
             if not node_json:
                 return
 
-            notify_complete()
+            print("[deploy] Run cancelled.")
             CommonUtil.run_cancelled = True
 
         deploy_handler = long_poll_handler.DeployHandler(

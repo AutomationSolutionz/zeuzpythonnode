@@ -1,0 +1,237 @@
+<body Name="People - Towhid faysal - Outlook" AutomationId="" LocalizedControlType="window" ClassName="Olk Host" pid="23168">
+  <div Name="" AutomationId="" LocalizedControlType="pane" ClassName="WebViewCaptionButton" Left="1733.0" Right="1913.0" Top="0.0" Bottom="60.0" />
+  <div Name="" AutomationId="" LocalizedControlType="pane" ClassName="WebViewTopBorder" Left="978.0" Right="1912.0" Top="0.0" Bottom="8.0" />
+  <div Name="" AutomationId="" LocalizedControlType="pane" ClassName="WebViewInstance" Left="978.0" Right="1912.0" Top="0.0" Bottom="1019.0" found="True">
+    <div Name="" AutomationId="" LocalizedControlType="pane" ClassName="Chrome_WidgetWin_0" Left="978.0" Right="1912.0" Top="0.0" Bottom="1019.0" found="True">
+      <div Name="" AutomationId="" LocalizedControlType="pane" ClassName="Chrome_WidgetWin_0" Left="978.0" Right="1733.0" Top="50.0" Bottom="60.0" />
+      <div Name="" AutomationId="" LocalizedControlType="pane" ClassName="Chrome_WidgetWin_0" Left="1663.0" Right="1733.0" Top="10.0" Bottom="50.0" />
+      <div Name="" AutomationId="" LocalizedControlType="pane" ClassName="Chrome_WidgetWin_0" Left="978.0" Right="1303.0" Top="10.0" Bottom="50.0" />
+      <div Name="" AutomationId="" LocalizedControlType="pane" ClassName="Chrome_WidgetWin_0" Left="978.0" Right="1733.0" Top="0.0" Bottom="10.0" />
+      <div Name="People - Towhid faysal - Outlook" AutomationId="" LocalizedControlType="pane" ClassName="Chrome_WidgetWin_1" Left="978.0" Right="1912.0" Top="0.0" Bottom="1019.0" found="True">
+        <div Name="" AutomationId="" LocalizedControlType="pane" ClassName="Intermediate D3D Window" Left="978.0" Right="1912.0" Top="0.0" Bottom="1019.0" found="True" zeuz="aiplugin" area="951746.0" pattern_list="[]" />
+        <div Name="" AutomationId="" LocalizedControlType="pane" ClassName="Intermediate D3D Window" Left="978.0" Right="1912.0" Top="0.0" Bottom="1019.0" found="True" zeuz="aiplugin" area="951746.0" pattern_list="[]" />
+        <div Name="People - Towhid faysal - Outlook - Web content" AutomationId="" LocalizedControlType="region" ClassName="BrowserRootView" Left="977.0" Right="1912.0" Top="0.0" Bottom="1020.0" found="True">
+          <div Name="" AutomationId="" LocalizedControlType="region" ClassName="NonClientView" Left="977.0" Right="1912.0" Top="0.0" Bottom="1020.0" found="True">
+            <div Name="" AutomationId="" LocalizedControlType="region" ClassName="EmbeddedBrowserTabRootView" Left="inf" Right="-inf" Top="inf" Bottom="-inf" />
+            <div Name="" AutomationId="" LocalizedControlType="region" ClassName="EmbeddedBrowserFrameView" Left="977.0" Right="1912.0" Top="0.0" Bottom="1020.0" found="True">
+              <div Name="" AutomationId="" LocalizedControlType="region" ClassName="BrowserView" Left="977.0" Right="1912.0" Top="0.0" Bottom="1020.0" found="True">
+                <div Name="" AutomationId="" LocalizedControlType="region" ClassName="TopContainerView" Left="inf" Right="-inf" Top="inf" Bottom="-inf" />
+                <div Name="" AutomationId="" LocalizedControlType="region" ClassName="SidebarContentsSplitView" Left="977.0" Right="1912.0" Top="0.0" Bottom="1020.0" found="True">
+                  <div Name="" AutomationId="" LocalizedControlType="region" ClassName="SidebarContentsSplitView" Left="977.0" Right="1912.0" Top="0.0" Bottom="1020.0" found="True">
+                    <div Name="" AutomationId="" LocalizedControlType="region" ClassName="View" Left="977.0" Right="1912.0" Top="0.0" Bottom="1020.0" found="True">
+                      <div Name="People - Towhid faysal - Outlook" AutomationId="RootWebArea" LocalizedControlType="document" ClassName="" Left="977.0" Right="1912.0" Top="0.0" Bottom="1020.0" found="True">
+                        <div Name="" AutomationId="" LocalizedControlType="app" ClassName="ms-font-s disableTextSelection ms-Fabric--isFocusHidden" Left="977.0" Right="1912.0" Top="0.0" Bottom="1020.0" found="True">
+                          <div Name="" AutomationId="app" LocalizedControlType="group" ClassName="" Left="977.0" Right="1912.0" Top="0.0" Bottom="1020.0" found="True">
+                            <div Name="" AutomationId="" LocalizedControlType="group" ClassName="Mb6t1" Left="977.0" Right="1912.0" Top="0.0" Bottom="60.0" found="True">
+                              <div Name="" AutomationId="o365header" LocalizedControlType="group" ClassName="M7RMk624fi5g/EJCqDnwxQ== removeFocusOutline" Left="977.0" Right="1732.0" Top="0.0" Bottom="60.0" found="True">
+                                <div Name="" AutomationId="O365_NavHeader" LocalizedControlType="banner" ClassName="dQ8XLMIyNxl8MAYqMsUZFQ== o365cs-base o365sx-navbar o365sx-search" Left="977.0" Right="1732.0" Top="0.0" Bottom="60.0" found="True">
+                                  <div Name="" AutomationId="CenterRegion" LocalizedControlType="group" ClassName="_25CqRVKwE38X5RHExD4IyA==" Left="977.0" Right="1732.0" Top="0.0" Bottom="60.0" found="True">
+                                    <div Name="" AutomationId="owaLogoOnTileSpace" LocalizedControlType="group" ClassName="siUMOJwnumycxvszBe3uzQ==" Left="977.0" Right="990.0" Top="0.0" Bottom="60.0" />
+                                    <div Name="Go to Outlook" AutomationId="O365_AppName" LocalizedControlType="link" ClassName="AzzTpbJF15SioND4vylW8A== o365sx-appBrandLink" Left="999.0" Right="1074.0" Top="0.0" Bottom="60.0" />
+                                    <div Name="" AutomationId="owaSearchScopePicker" LocalizedControlType="group" ClassName="siUMOJwnumycxvszBe3uzQ==" Left="1195.0" Right="1302.0" Top="0.0" Bottom="60.0" />
+                                    <div Name="" AutomationId="owaSearchBox" LocalizedControlType="group" ClassName="siUMOJwnumycxvszBe3uzQ==" Left="1302.0" Right="1683.0" Top="0.0" Bottom="60.0" found="True">
+                                      <div Name="Search" AutomationId="searchBoxColumnContainerId" LocalizedControlType="search" ClassName="NUUqy bbNls PQm58" Left="1302.0" Right="1663.0" Top="10.0" Bottom="50.0" found="True">
+                                        <div Name="Exit search mode" AutomationId="" LocalizedControlType="button" ClassName="ms-Button ms-Button--icon WhRKO root-166" Left="1302.0" Right="1357.0" Top="10.0" Bottom="50.0" />
+                                        <div Name="Search" AutomationId="SearchBox315" LocalizedControlType="edit" ClassName="ms-SearchBox-field krigW field-386" Left="1357.0" Right="1559.0" Top="17.0" Bottom="43.0" found="True" zeuz="aiplugin" area="5252.0" pattern_list="['Value', 'Text', 'ScrollItem']" Value="" />
+                                        <div Name="Include search results from All" AutomationId="" LocalizedControlType="button" ClassName="ms-Button ms-Button--default ms-Button--hasMenu L6vX3 root-158" Left="1558.0" Right="1626.0" Top="10.0" Bottom="50.0">
+                                          <div Name="All" AutomationId="" LocalizedControlType="text" ClassName="" Left="1569.0" Right="1590.0" Top="18.0" Bottom="41.0" />
+                                        </div>
+                                        <div Name="Search" AutomationId="" LocalizedControlType="button" ClassName="ms-Button ms-Button--icon K7EIg root-166" Left="1625.0" Right="1663.0" Top="10.0" Bottom="50.0" />
+                                      </div>
+                                    </div>
+                                    <div Name="" AutomationId="owaChatCopilotButton" LocalizedControlType="group" ClassName="siUMOJwnumycxvszBe3uzQ==" Left="inf" Right="-inf" Top="inf" Bottom="-inf" />
+                                    <div Name="" AutomationId="OwaMergedNotificationPane" LocalizedControlType="group" ClassName="siUMOJwnumycxvszBe3uzQ==" Left="inf" Right="-inf" Top="inf" Bottom="-inf" />
+                                    <div Name="Access additional features" AutomationId="O365_MainLink_Affordance" LocalizedControlType="button" ClassName="clgiLVKPzugZZns0LiPTqw== o365sx-button" Left="1682.0" Right="1743.0" Top="0.0" Bottom="60.0" />
+                                  </div>
+                                  <div Name="" AutomationId="O365_UniversalMeContainer" LocalizedControlType="group" ClassName="" Left="inf" Right="-inf" Top="inf" Bottom="-inf" />
+                                </div>
+                                <div Name="" AutomationId="o365cs-flexpane-overlay" LocalizedControlType="group" ClassName="" Left="inf" Right="-inf" Top="inf" Bottom="-inf" />
+                              </div>
+                            </div>
+                            <div Name="Minimise" AutomationId="windowIconMinimize" LocalizedControlType="button" ClassName="ms-Button ms-Button--icon P7e8Z root-166" Left="1732.0" Right="1792.0" Top="0.0" Bottom="60.0" />
+                            <div Name="Maximise" AutomationId="windowIconMaximize" LocalizedControlType="button" ClassName="ms-Button ms-Button--icon P7e8Z root-166" Left="1792.0" Right="1852.0" Top="0.0" Bottom="60.0" />
+                            <div Name="Close" AutomationId="windowIconClose" LocalizedControlType="button" ClassName="ms-Button ms-Button--icon P7e8Z root-166" Left="1852.0" Right="1912.0" Top="0.0" Bottom="60.0" />
+                            <div Name="left-rail-appbar" AutomationId="" LocalizedControlType="navigation" ClassName="___1w2h5wn f22iagw f122n59 f17wyjut f1mtd64y f1vx9l62 f1c21dwh f1ja72i3" Left="982.0" Right="1032.0" Top="60.0" Bottom="405.0">
+                              <div Name="Email" AutomationId="" LocalizedControlType="group" ClassName="___77lcry0 f10pi13n" Left="982.0" Right="1032.0" Top="60.0" Bottom="118.0">
+                                <div Name="Email" AutomationId="ddea774c-382b-47d7-aab5-adc2139a802b" LocalizedControlType="toggle button" ClassName="fui-Button r1alrhcs ___42bh5m0 f1brlhvm f10xn8zz f136y8j8 f1sl3k7w f18ktai2 f12clzc2 fjy1crr fre7gi1 f1358rze fqdk4by f1rvrf73 fbhnoac feqmc2u f4gg0ds fstwlwf figsok6 f1c21dwh f1xqy1su f1sdsnyy ftqa4ok f2hkw1w f8hki3x f1d2448m f1bjia2o ffh67wi f226i61 f13kzufm flujwa2 fsx75g8 f15bsgw9 f14e48fq f18yb2kv fd6o370 ffwy5si f3znvyf f1mywlt f1njr18z fiwyskv f1o5h46z f14vf7cg fd2qbv0 fiu8gst f1q3txrk f1s2uweq fr80ssc f1ukrpxl fecsdlb f1wzlk2i f1xvs2q5 f89q0t6 feepzgm f1srymw7 flx3s7b frkp0ho f1o7qkhw ffo4vs f1gm94m1 fdgk4ew fstat9y" Left="982.0" Right="1032.0" Top="63.0" Bottom="114.0">
+                                  <div Name="Email" AutomationId="" LocalizedControlType="graphic" ClassName="" Left="994.0" Right="1020.0" Top="75.0" Bottom="101.0" />
+                                </div>
+                              </div>
+                              <div Name="Calendar" AutomationId="" LocalizedControlType="group" ClassName="___77lcry0 f10pi13n" Left="982.0" Right="1032.0" Top="117.0" Bottom="175.0">
+                                <div Name="Calendar" AutomationId="8cbeb86f-83e1-43b5-aaba-cd3514322f0b" LocalizedControlType="toggle button" ClassName="fui-Button r1alrhcs ___42bh5m0 f1brlhvm f10xn8zz f136y8j8 f1sl3k7w f18ktai2 f12clzc2 fjy1crr fre7gi1 f1358rze fqdk4by f1rvrf73 fbhnoac feqmc2u f4gg0ds fstwlwf figsok6 f1c21dwh f1xqy1su f1sdsnyy ftqa4ok f2hkw1w f8hki3x f1d2448m f1bjia2o ffh67wi f226i61 f13kzufm flujwa2 fsx75g8 f15bsgw9 f14e48fq f18yb2kv fd6o370 ffwy5si f3znvyf f1mywlt f1njr18z fiwyskv f1o5h46z f14vf7cg fd2qbv0 fiu8gst f1q3txrk f1s2uweq fr80ssc f1ukrpxl fecsdlb f1wzlk2i f1xvs2q5 f89q0t6 feepzgm f1srymw7 flx3s7b frkp0ho f1o7qkhw ffo4vs f1gm94m1 fdgk4ew fstat9y" Left="982.0" Right="1032.0" Top="121.0" Bottom="172.0">
+                                  <div Name="Calendar" AutomationId="" LocalizedControlType="graphic" ClassName="" Left="994.0" Right="1020.0" Top="132.0" Bottom="158.0" />
+                                </div>
+                              </div>
+                              <div Name="People" AutomationId="" LocalizedControlType="group" ClassName="___77lcry0 f10pi13n" Left="982.0" Right="1032.0" Top="175.0" Bottom="233.0">
+                                <div Name="People" AutomationId="355fbd79-3ba2-4554-8f2d-0300fde91f30" LocalizedControlType="toggle button" ClassName="fui-Button r1alrhcs ___77hcy90 f1brlhvm f10xn8zz f136y8j8 f1sl3k7w f18ktai2 f12clzc2 fjy1crr fre7gi1 f1358rze fqdk4by f1rvrf73 fbhnoac feqmc2u f4gg0ds fstwlwf figsok6 f198j0k f1xqy1su f1sdsnyy ftqa4ok f2hkw1w f8hki3x f1d2448m f1bjia2o ffh67wi f226i61 f13kzufm flujwa2 fsx75g8 f15bsgw9 f14e48fq f18yb2kv fd6o370 ffwy5si f3znvyf f1mywlt f1njr18z fiwyskv f1o5h46z f14vf7cg fd2qbv0 fiu8gst f1q3txrk f1s2uweq fr80ssc f1ukrpxl fecsdlb f1wzlk2i f1xvs2q5 f89q0t6 feepzgm f1srymw7 flx3s7b frkp0ho f1o7qkhw ffo4vs f1gm94m1 fdgk4ew fstat9y fkc42ay f1rirnrt" Left="982.0" Right="1032.0" Top="178.0" Bottom="229.0">
+                                  <div Name="People" AutomationId="" LocalizedControlType="graphic" ClassName="" Left="994.0" Right="1020.0" Top="190.0" Bottom="216.0" />
+                                </div>
+                              </div>
+                              <div Name="Word" AutomationId="" LocalizedControlType="group" ClassName="___77lcry0 f10pi13n" Left="982.0" Right="1032.0" Top="232.0" Bottom="290.0">
+                                <div Name="Word" AutomationId="34318026-c018-414b-abb3-3e32dfb9cc4c" LocalizedControlType="toggle button" ClassName="fui-Button r1alrhcs ___42bh5m0 f1brlhvm f10xn8zz f136y8j8 f1sl3k7w f18ktai2 f12clzc2 fjy1crr fre7gi1 f1358rze fqdk4by f1rvrf73 fbhnoac feqmc2u f4gg0ds fstwlwf figsok6 f1c21dwh f1xqy1su f1sdsnyy ftqa4ok f2hkw1w f8hki3x f1d2448m f1bjia2o ffh67wi f226i61 f13kzufm flujwa2 fsx75g8 f15bsgw9 f14e48fq f18yb2kv fd6o370 ffwy5si f3znvyf f1mywlt f1njr18z fiwyskv f1o5h46z f14vf7cg fd2qbv0 fiu8gst f1q3txrk f1s2uweq fr80ssc f1ukrpxl fecsdlb f1wzlk2i f1xvs2q5 f89q0t6 feepzgm f1srymw7 flx3s7b frkp0ho f1o7qkhw ffo4vs f1gm94m1 fdgk4ew fstat9y" Left="982.0" Right="1032.0" Top="236.0" Bottom="287.0">
+                                  <div Name="Word" AutomationId="" LocalizedControlType="graphic" ClassName="" Left="994.0" Right="1020.0" Top="247.0" Bottom="273.0" />
+                                </div>
+                              </div>
+                              <div Name="Excel" AutomationId="" LocalizedControlType="group" ClassName="___77lcry0 f10pi13n" Left="982.0" Right="1032.0" Top="290.0" Bottom="348.0">
+                                <div Name="Excel" AutomationId="c5251a9b-a95d-4595-91ee-a39e6eed3db2" LocalizedControlType="toggle button" ClassName="fui-Button r1alrhcs ___42bh5m0 f1brlhvm f10xn8zz f136y8j8 f1sl3k7w f18ktai2 f12clzc2 fjy1crr fre7gi1 f1358rze fqdk4by f1rvrf73 fbhnoac feqmc2u f4gg0ds fstwlwf figsok6 f1c21dwh f1xqy1su f1sdsnyy ftqa4ok f2hkw1w f8hki3x f1d2448m f1bjia2o ffh67wi f226i61 f13kzufm flujwa2 fsx75g8 f15bsgw9 f14e48fq f18yb2kv fd6o370 ffwy5si f3znvyf f1mywlt f1njr18z fiwyskv f1o5h46z f14vf7cg fd2qbv0 fiu8gst f1q3txrk f1s2uweq fr80ssc f1ukrpxl fecsdlb f1wzlk2i f1xvs2q5 f89q0t6 feepzgm f1srymw7 flx3s7b frkp0ho f1o7qkhw ffo4vs f1gm94m1 fdgk4ew fstat9y" Left="982.0" Right="1032.0" Top="293.0" Bottom="344.0">
+                                  <div Name="Excel" AutomationId="" LocalizedControlType="graphic" ClassName="" Left="994.0" Right="1020.0" Top="305.0" Bottom="331.0" />
+                                </div>
+                              </div>
+                              <div Name="PowerPoint" AutomationId="" LocalizedControlType="group" ClassName="___77lcry0 f10pi13n" Left="982.0" Right="1032.0" Top="347.0" Bottom="405.0">
+                                <div Name="PowerPoint" AutomationId="48cb9ead-1c19-4e1f-8ed9-3d60a7e52b18" LocalizedControlType="toggle button" ClassName="fui-Button r1alrhcs ___42bh5m0 f1brlhvm f10xn8zz f136y8j8 f1sl3k7w f18ktai2 f12clzc2 fjy1crr fre7gi1 f1358rze fqdk4by f1rvrf73 fbhnoac feqmc2u f4gg0ds fstwlwf figsok6 f1c21dwh f1xqy1su f1sdsnyy ftqa4ok f2hkw1w f8hki3x f1d2448m f1bjia2o ffh67wi f226i61 f13kzufm flujwa2 fsx75g8 f15bsgw9 f14e48fq f18yb2kv fd6o370 ffwy5si f3znvyf f1mywlt f1njr18z fiwyskv f1o5h46z f14vf7cg fd2qbv0 fiu8gst f1q3txrk f1s2uweq fr80ssc f1ukrpxl fecsdlb f1wzlk2i f1xvs2q5 f89q0t6 feepzgm f1srymw7 flx3s7b frkp0ho f1o7qkhw ffo4vs f1gm94m1 fdgk4ew fstat9y" Left="982.0" Right="1032.0" Top="351.0" Bottom="402.0">
+                                  <div Name="PowerPoint" AutomationId="" LocalizedControlType="graphic" ClassName="" Left="994.0" Right="1020.0" Top="362.0" Bottom="388.0" />
+                                </div>
+                              </div>
+                              <div Name="" AutomationId="DndLiveRegion-0" LocalizedControlType="status" ClassName="" Left="1006.0" Right="1008.0" Top="58.0" Bottom="60.0" />
+                            </div>
+                            <div Name="More apps" AutomationId="" LocalizedControlType="group" ClassName="___77lcry0 f10pi13n" Left="982.0" Right="1032.0" Top="405.0" Bottom="455.0">
+                              <div Name="More apps" AutomationId="" LocalizedControlType="button" ClassName="fui-Button r1alrhcs ___n7i1gv0 f18ktai2 f12clzc2 f44c6la fre7gi1 f1358rze fqdk4by f1rvrf73 fbhnoac feqmc2u f1couhl3 fhovq9v figsok6 f11uhznr f1u8i3ug fvi4nxw fz7cnr3 f1o7qkhw fzpis3h f1q3txrk fd2qbv0 fiu8gst f1xqy1su" Left="982.0" Right="1032.0" Top="405.0" Bottom="455.0" />
+                            </div>
+                            <div Name="Ribbon" AutomationId="" LocalizedControlType="region" ClassName=" PQm58" Left="1038.0" Right="1912.0" Top="60.0" Bottom="220.0">
+                              <div Name="Show navigation pane" AutomationId="" LocalizedControlType="button" ClassName="ms-Button Se2hy ms-Button--commandBar root-170" Left="1050.0" Right="1101.0" Top="60.0" Bottom="103.0" />
+                              <div Name="Ribbon tabs" AutomationId="tablist" LocalizedControlType="group" ClassName="ms-FocusZone css-176" Left="1100.0" Right="1337.0" Top="60.0" Bottom="99.0">
+                                <div Name="" AutomationId="" LocalizedControlType="tab" ClassName="ms-OverflowSet root-177" Left="1100.0" Right="1337.0" Top="60.0" Bottom="99.0">
+                                  <div Name="Home" AutomationId="8000" LocalizedControlType="tab item" ClassName="ms-Button root-180" Left="1100.0" Right="1186.0" Top="60.0" Bottom="99.0" />
+                                  <div Name="View" AutomationId="8001" LocalizedControlType="tab item" ClassName="ms-Button root-185" Left="1187.0" Right="1261.0" Top="60.0" Bottom="99.0" />
+                                  <div Name="Help" AutomationId="11000" LocalizedControlType="tab item" ClassName="ms-Button root-185" Left="1262.0" Right="1336.0" Top="60.0" Bottom="99.0" />
+                                </div>
+                              </div>
+                              <div Name="" AutomationId="" LocalizedControlType="group" ClassName="" Left="1119.0" Right="1168.0" Top="95.0" Bottom="99.0" />
+                              <div Name="Home" AutomationId="8000-tabpanel" LocalizedControlType="tab panel" ClassName="kGvEO root-393 bottomBarContainer" Left="1048.0" Right="1887.0" Top="105.0" Bottom="220.0">
+                                <div Name="New" AutomationId="8101-group" LocalizedControlType="group" ClassName="root-194" Left="1053.0" Right="1122.0" Top="105.0" Bottom="220.0">
+                                  <div Name="New contact" AutomationId="" LocalizedControlType="button" ClassName="splitButtonContainer-234" Left="1053.0" Right="1122.0" Top="109.0" Bottom="200.0">
+                                    <div Name="New contact" AutomationId="" LocalizedControlType="button" ClassName="splitPrimaryButton root-394" Left="1053.0" Right="1122.0" Top="109.0" Bottom="155.0" />
+                                    <div Name="Create new contact or contact list" AutomationId="" LocalizedControlType="button" ClassName="ms-Button splitMenuButton splitButtonMenuButton-397" Left="1053.0" Right="1122.0" Top="154.0" Bottom="200.0">
+                                      <div Name="New" AutomationId="" LocalizedControlType="text" ClassName="" Left="1072.0" Right="1103.0" Top="154.0" Bottom="175.0" />
+                                      <div Name="contact" AutomationId="" LocalizedControlType="text" ClassName="" Left="1055.0" Right="1105.0" Top="174.0" Bottom="195.0" />
+                                    </div>
+                                  </div>
+                                  <div Name="New" AutomationId="" LocalizedControlType="text" ClassName="" Left="1074.0" Right="1100.0" Top="203.0" Bottom="219.0" />
+                                </div>
+                                <div Name="Edit" AutomationId="8103-group" LocalizedControlType="group" ClassName="root-194" Left="1142.0" Right="1193.0" Top="105.0" Bottom="220.0">
+                                  <div Name="Edit" AutomationId="8505" LocalizedControlType="button" ClassName="ms-Button root-263" Left="1142.0" Right="1193.0" Top="109.0" Bottom="200.0" />
+                                  <div Name="Edit" AutomationId="" LocalizedControlType="text" ClassName="" Left="1156.0" Right="1178.0" Top="203.0" Bottom="219.0" />
+                                </div>
+                                <div Name="Delete" AutomationId="8102-group" LocalizedControlType="group" ClassName="root-194" Left="1213.0" Right="1318.0" Top="105.0" Bottom="220.0">
+                                  <div Name="Delete" AutomationId="8518" LocalizedControlType="button" ClassName="ms-Button root-263" Left="1213.0" Right="1264.0" Top="109.0" Bottom="200.0" />
+                                  <div Name="Restore" AutomationId="8507" LocalizedControlType="button" ClassName="ms-Button is-disabled root-243" Left="1263.0" Right="1318.0" Top="109.0" Bottom="200.0" />
+                                  <div Name="Delete" AutomationId="" LocalizedControlType="text" ClassName="" Left="1247.0" Right="1284.0" Top="203.0" Bottom="219.0" />
+                                </div>
+                                <div Name="Action" AutomationId="8104-group" LocalizedControlType="group" ClassName="root-194" Left="1338.0" Right="1518.0" Top="105.0" Bottom="220.0">
+                                  <div Name="Add to contacts" AutomationId="8519" LocalizedControlType="button" ClassName="ms-Button is-disabled root-243" Left="1338.0" Right="1399.0" Top="109.0" Bottom="200.0" />
+                                  <div Name="Add to favourites" AutomationId="8516" LocalizedControlType="button" ClassName="ms-Button root-263" Left="1398.0" Right="1468.0" Top="109.0" Bottom="200.0" />
+                                  <div Name="Add to list" AutomationId="8520" LocalizedControlType="button" ClassName="ms-Button ms-Button--hasMenu is-disabled root-259" Left="1467.0" Right="1518.0" Top="109.0" Bottom="200.0">
+                                    <div Name="Add to" AutomationId="" LocalizedControlType="text" ClassName="" Left="1470.0" Right="1516.0" Top="154.0" Bottom="175.0" />
+                                    <div Name="list" AutomationId="" LocalizedControlType="text" ClassName="" Left="1473.0" Right="1493.0" Top="174.0" Bottom="195.0" />
+                                    <div Name="Add this contact to a contact list." AutomationId="" LocalizedControlType="text" ClassName="" Left="1492.0" Right="1746.0" Top="110.0" Bottom="134.0" />
+                                  </div>
+                                  <div Name="Action" AutomationId="" LocalizedControlType="text" ClassName="" Left="1410.0" Right="1446.0" Top="203.0" Bottom="219.0" />
+                                </div>
+                                <div Name="Manage contacts" AutomationId="8106-group" LocalizedControlType="group" ClassName="root-194" Left="1538.0" Right="1634.0" Top="105.0" Bottom="220.0">
+                                  <div Name="Manage contacts" AutomationId="8523" LocalizedControlType="button" ClassName="ms-Button ms-Button--hasMenu root-404" Left="1546.0" Right="1626.0" Top="109.0" Bottom="200.0">
+                                    <div Name="Manage" AutomationId="" LocalizedControlType="text" ClassName="" Left="1559.0" Right="1614.0" Top="154.0" Bottom="175.0" />
+                                    <div Name="contacts" AutomationId="" LocalizedControlType="text" ClassName="" Left="1548.0" Right="1604.0" Top="174.0" Bottom="195.0" />
+                                    <div Name="Import contacts from other apps or create file and export to other apps." AutomationId="" LocalizedControlType="text" ClassName="" Left="1585.0" Right="2139.0" Top="110.0" Bottom="134.0" />
+                                  </div>
+                                  <div Name="Manage contacts" AutomationId="" LocalizedControlType="text" ClassName="" Left="1538.0" Right="1634.0" Top="203.0" Bottom="219.0" />
+                                </div>
+                              </div>
+                              <div Name="Ribbon display options" AutomationId="RibbonLayoutButton" LocalizedControlType="button" ClassName="ms-Button ms-Button--icon ms-Button--hasMenu root-264" Left="1887.0" Right="1910.0" Top="195.0" Bottom="220.0" />
+                              <div Name="" AutomationId="" LocalizedControlType="group" ClassName="" Left="inf" Right="-inf" Top="inf" Bottom="-inf" />
+                            </div>
+                            <div Name="Hub navigation menu" AutomationId="" LocalizedControlType="navigation" ClassName="JC7J2 nMePd css-360 hdX5T lawcd PQm58" Left="1038.0" Right="1048.0" Top="220.0" Bottom="1020.0" />
+                            <div Name="All contacts" AutomationId="" LocalizedControlType="navigation" ClassName="BTt9m wNfTr PQm58" Left="1049.0" Right="1911.0" Top="231.0" Bottom="1020.0">
+                              <div Name="Select all" AutomationId="" LocalizedControlType="checkbox" ClassName="YzUdf faua_" Left="1054.0" Right="1119.0" Top="236.0" Bottom="301.0">
+                                <div Name="" AutomationId="checkbox-379" LocalizedControlType="checkbox" ClassName="input-289" Left="1081.0" Right="1098.0" Top="262.0" Bottom="279.0" />
+                              </div>
+                              <div Name="All contacts" AutomationId="" LocalizedControlType="text" ClassName="" Left="1119.0" Right="1212.0" Top="257.0" Bottom="280.0" />
+                              <div Name="Sorting options. Sort by By first name selected" AutomationId="" LocalizedControlType="button" ClassName="ms-Button ms-Button--default ms-Button--hasMenu CZBDz JcHHH root-158" Left="1768.0" Right="1906.0" Top="248.0" Bottom="289.0">
+                                <div Name="By first name" AutomationId="" LocalizedControlType="text" ClassName="" Left="1774.0" Right="1879.0" Top="256.0" Bottom="280.0" />
+                              </div>
+                              <div Name="All contacts No items selected" AutomationId="" LocalizedControlType="list" ClassName="ms-FocusZone css-176" Left="1049.0" Right="1912.0" Top="307.0" Bottom="1020.0">
+                                <div Name="Samin Vhai Automation SolutionZ, +8801797502998, Not marked as favorite" AutomationId="HubContactId_RgAAAAB_uWD2RnQfTrBjl_Ws6a5BBwB9yD97SWA8SpA_6xro3m8MAAAAAAEkAAB9yD97SWA8SpA_6xro3m8MAAAAACiyAAAA0" LocalizedControlType="option" ClassName="DXpY5 HMjOq Ehg6h ZkeoC lTdWY" Left="1049.0" Right="1912.0" Top="307.0" Bottom="384.0">
+                                  <div Name="" AutomationId="" LocalizedControlType="group" ClassName="qHDHd dX9R5" Left="1054.0" Right="1119.0" Top="312.0" Bottom="379.0">
+                                    <div Name="Samin Vhai Automation SolutionZ" AutomationId="avatar-rq" LocalizedControlType="graphic" ClassName="fui-Avatar r81b29z" Left="1066.0" Right="1107.0" Top="325.0" Bottom="366.0" />
+                                  </div>
+                                </div>
+                                <div Name="Towhid Al Faysal, faysalyyyyyyy@gmail.com, Not marked as favorite" AutomationId="HubContactId_RgAAAAB_uWD2RnQfTrBjl_Ws6a5BBwB9yD97SWA8SpA_6xro3m8MAAAAAAEkAAB9yD97SWA8SpA_6xro3m8MAAABWft0AAAA0" LocalizedControlType="option" ClassName="DXpY5 HMjOq Ehg6h" Left="1049.0" Right="1912.0" Top="383.0" Bottom="460.0">
+                                  <div Name="" AutomationId="" LocalizedControlType="group" ClassName="qHDHd dX9R5" Left="1054.0" Right="1119.0" Top="388.0" Bottom="455.0">
+                                    <div Name="Towhid Al Faysal" AutomationId="avatar-r16" LocalizedControlType="graphic" ClassName="fui-Avatar r81b29z" Left="1066.0" Right="1107.0" Top="401.0" Bottom="442.0" />
+                                  </div>
+                                </div>
+                                <div Name="Towhid Faysal, faysal@gmail.com, Not marked as favorite" AutomationId="HubContactId_RgAAAAB_uWD2RnQfTrBjl_Ws6a5BBwB9yD97SWA8SpA_6xro3m8MAAAAAAEkAAB9yD97SWA8SpA_6xro3m8MAAAAACizAAAA0" LocalizedControlType="option" ClassName="DXpY5 HMjOq Ehg6h" Left="1049.0" Right="1912.0" Top="459.0" Bottom="536.0">
+                                  <div Name="" AutomationId="" LocalizedControlType="group" ClassName="qHDHd dX9R5" Left="1054.0" Right="1119.0" Top="464.0" Bottom="531.0">
+                                    <div Name="Towhid Faysal" AutomationId="avatar-rv" LocalizedControlType="graphic" ClassName="fui-Avatar r81b29z" Left="1066.0" Right="1107.0" Top="477.0" Bottom="518.0" />
+                                  </div>
+                                </div>
+                                <div Name="Towhid Faysal, faysal@gmail.com, Not marked as favorite" AutomationId="HubContactId_RgAAAAB_uWD2RnQfTrBjl_Ws6a5BBwB9yD97SWA8SpA_6xro3m8MAAAAAAEkAAB9yD97SWA8SpA_6xro3m8MAAABWftyAAAA0" LocalizedControlType="option" ClassName="DXpY5 HMjOq Ehg6h" Left="1049.0" Right="1912.0" Top="535.0" Bottom="612.0">
+                                  <div Name="" AutomationId="" LocalizedControlType="group" ClassName="qHDHd dX9R5" Left="1054.0" Right="1119.0" Top="540.0" Bottom="607.0">
+                                    <div Name="Towhid Faysal" AutomationId="avatar-r10" LocalizedControlType="graphic" ClassName="fui-Avatar r81b29z" Left="1066.0" Right="1107.0" Top="553.0" Bottom="594.0" />
+                                  </div>
+                                </div>
+                                <div Name="Towhid Faysal, faysal@gmail.com, Not marked as favorite" AutomationId="HubContactId_RgAAAAB_uWD2RnQfTrBjl_Ws6a5BBwB9yD97SWA8SpA_6xro3m8MAAAAAAEkAAB9yD97SWA8SpA_6xro3m8MAAABWftzAAAA0" LocalizedControlType="option" ClassName="DXpY5 HMjOq Ehg6h" Left="1049.0" Right="1912.0" Top="612.0" Bottom="689.0">
+                                  <div Name="" AutomationId="" LocalizedControlType="group" ClassName="qHDHd dX9R5" Left="1054.0" Right="1119.0" Top="617.0" Bottom="684.0">
+                                    <div Name="Towhid Faysal" AutomationId="avatar-r11" LocalizedControlType="graphic" ClassName="fui-Avatar r81b29z" Left="1066.0" Right="1107.0" Top="630.0" Bottom="671.0" />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div Name="" AutomationId="notificationBarText" LocalizedControlType="alert" ClassName="screenReaderOnly" Left="1038.0" Right="1040.0" Top="0.0" Bottom="2.0" />
+                          </div>
+                          <div Name="" AutomationId="" LocalizedControlType="group" ClassName="ms-Fabric ms-Layer-content content-303" Left="inf" Right="-inf" Top="inf" Bottom="-inf" />
+                          <div Name="" AutomationId="" LocalizedControlType="group" ClassName="ms-Fabric ms-Layer-content content-420" Left="987.0" Right="1019.0" Top="10.0" Bottom="22.0" />
+                          <div Name="" AutomationId="" LocalizedControlType="group" ClassName="ms-Fabric ms-Layer-content content-303" Left="inf" Right="-inf" Top="inf" Bottom="-inf">
+                            <div Name="" AutomationId="searchSuggestions" LocalizedControlType="group" ClassName="ms-Callout root-606 css-94" Left="1302.0" Right="1626.0" Top="49.0" Bottom="425.0">
+                              <div Name="" AutomationId="" LocalizedControlType="list" ClassName="ms-FocusZone css-176 Sepug" Left="1302.0" Right="1626.0" Top="49.0" Bottom="425.0">
+                                <div Name="faysal.al860@gmail.com, null" AutomationId="_HubPersonaId_AQQkAGM4YzkwMAItNmNkZAAtMmFlMS0wMAItMDAKABAAIi2ADdlqgEKB0/dy4qxDjQ==" LocalizedControlType="button" ClassName="LcjXo" Left="1302.0" Right="1727.0" Top="49.0" Bottom="113.0">
+                                  <div Name="faysal.al860@gmail.com" AutomationId="avatar-r1d" LocalizedControlType="graphic" ClassName="fui-Avatar r81b29z ___15c0rxp f1w9dchk fxldao9 fy9rknc" Left="1314.0" Right="1350.0" Top="63.0" Bottom="99.0" />
+                                </div>
+                                <div Name="Snaphunt Team, info@snaphunt.com" AutomationId="_HubPersonaId_AQQkAGM4YzkwMAItNmNkZAAtMmFlMS0wMAItMDAKABAAojO3dahKrEy4YE+GsZczWQ==" LocalizedControlType="button" ClassName="LcjXo" Left="1302.0" Right="1727.0" Top="112.0" Bottom="175.0">
+                                  <div Name="Snaphunt Team" AutomationId="avatar-r1e" LocalizedControlType="graphic" ClassName="fui-Avatar r81b29z ___15c0rxp f1w9dchk fxldao9 fy9rknc" Left="1314.0" Right="1350.0" Top="126.0" Bottom="162.0" />
+                                </div>
+                                <div Name="dipu@automationsolutionz.com, null" AutomationId="_HubPersonaId_AQQkAGM4YzkwMAItNmNkZAAtMmFlMS0wMAItMDAKABAAv6/aaCPsXEirDPv46Gw46A==" LocalizedControlType="button" ClassName="LcjXo" Left="1302.0" Right="1727.0" Top="174.0" Bottom="238.0">
+                                  <div Name="dipu@automationsolutionz.com" AutomationId="avatar-r1f" LocalizedControlType="graphic" ClassName="fui-Avatar r81b29z ___15c0rxp f1w9dchk fxldao9 fy9rknc" Left="1314.0" Right="1350.0" Top="188.0" Bottom="224.0" />
+                                </div>
+                                <div Name="jaspal.rana@snaphunt.com, null" AutomationId="_HubPersonaId_MkU4MDBGNDUtMEY3OS00MzM4LTg3RUUtNENFOTFBRURCODcxamFzcGFsLnJhbmFAc25hcGh1bnQuY29t" LocalizedControlType="button" ClassName="LcjXo" Left="1302.0" Right="1727.0" Top="237.0" Bottom="300.0">
+                                  <div Name="jaspal.rana@snaphunt.com" AutomationId="avatar-r1g" LocalizedControlType="graphic" ClassName="fui-Avatar r81b29z ___15c0rxp f1w9dchk fxldao9 fy9rknc" Left="1314.0" Right="1350.0" Top="251.0" Bottom="287.0" />
+                                </div>
+                                <div Name="Anusha Varri, anusha.varri@snaphunt.com" AutomationId="_HubPersonaId_AQQkAGM4YzkwMAItNmNkZAAtMmFlMS0wMAItMDAKABAAyUZ9MKmonkGahxoP+D0nuA==" LocalizedControlType="button" ClassName="LcjXo" Left="1302.0" Right="1727.0" Top="299.0" Bottom="363.0">
+                                  <div Name="Anusha Varri" AutomationId="avatar-r1h" LocalizedControlType="graphic" ClassName="fui-Avatar r81b29z ___15c0rxp f1w9dchk fxldao9 fy9rknc" Left="1314.0" Right="1350.0" Top="313.0" Bottom="349.0" />
+                                </div>
+                                <div Name="0_788792_1731481861024_106519_23991_9567.sc-10_43_4_74-inbound22@kucoin.com, null" AutomationId="_HubPersonaId_AQQkAGM4YzkwMAItNmNkZAAtMmFlMS0wMAItMDAKABAAzwIpzL2LlE+8tY7dsrnkhQ==" LocalizedControlType="button" ClassName="LcjXo" Left="1302.0" Right="1727.0" Top="362.0" Bottom="425.0">
+                                  <div Name="0_788792_1731481861024_106519_23991_9567.sc-10_43_4_74-inbound22@kucoin.com" AutomationId="avatar-r1i" LocalizedControlType="graphic" ClassName="fui-Avatar r81b29z ___15c0rxp f1w9dchk fxldao9 fy9rknc" Left="1314.0" Right="1350.0" Top="376.0" Bottom="412.0" />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div Name="" AutomationId="" LocalizedControlType="group" ClassName="___1uxlrft f1euv43f f15twtuk f1vgc2s3 f1e31b4d f494woh" Left="1897.0" Right="1912.0" Top="60.0" Bottom="75.0">
+                            <div Name="" AutomationId="" LocalizedControlType="group" ClassName="ki0YS ___13o0w9k f22iagw flvyvdh f1vx9l62 fnmz9kt fpl31xj f1itc2a7 fo0ha4s fsrcwf3 f14pamsa" Left="1897.0" Right="1912.0" Top="60.0" Bottom="75.0" />
+                          </div>
+                          <div Name="" AutomationId="lpe_core__live_persona_editor_container" LocalizedControlType="group" ClassName="" Left="inf" Right="-inf" Top="inf" Bottom="-inf" />
+                          <div Name="" AutomationId="lpv" LocalizedControlType="group" ClassName="" Left="inf" Right="-inf" Top="inf" Bottom="-inf" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div Name="" AutomationId="" LocalizedControlType="region" ClassName="View" Left="inf" Right="-inf" Top="inf" Bottom="-inf" />
+                <div Name="" AutomationId="" LocalizedControlType="region" ClassName="WindowedFindBarFocusProxyView" Left="inf" Right="-inf" Top="inf" Bottom="-inf" />
+                <div Name="" AutomationId="" LocalizedControlType="region" ClassName="EmbeddedBrowserDownloadView" Left="inf" Right="-inf" Top="inf" Bottom="-inf" />
+                <div Name="" AutomationId="" LocalizedControlType="region" ClassName="EmbeddedBrowserDownloadView" Left="inf" Right="-inf" Top="inf" Bottom="-inf" />
+              </div>
+            </div>
+            <div Name="" AutomationId="" LocalizedControlType="region" ClassName="TopContainerOverlayView" Left="977.0" Right="1912.0" Top="0.0" Bottom="1020.0" found="True" zeuz="aiplugin" area="953700.0" pattern_list="['ScrollItem']" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div Name="People - Towhid faysal - Outlook" AutomationId="TitleBar" LocalizedControlType="title bar" ClassName="" Left="979.0" Right="1911.0" Top="9.0" Bottom="38.0" found="True" zeuz="aiplugin" area="27028.0" pattern_list="[]">
+    <div Name="System Menu Bar" AutomationId="SystemMenuBar" LocalizedControlType="menu bar" ClassName="" Left="979.0" Right="1007.0" Top="9.0" Bottom="37.0">
+      <div Name="System" AutomationId="Item 1" LocalizedControlType="menu item" ClassName="" Left="979.0" Right="1007.0" Top="9.0" Bottom="37.0" />
+    </div>
+    <div Name="Minimize" AutomationId="Minimize" LocalizedControlType="button" ClassName="" Left="inf" Right="-inf" Top="inf" Bottom="-inf" />
+    <div Name="Maximize" AutomationId="Maximize" LocalizedControlType="button" ClassName="" Left="inf" Right="-inf" Top="inf" Bottom="-inf" />
+    <div Name="Close" AutomationId="Close" LocalizedControlType="button" ClassName="" Left="inf" Right="-inf" Top="inf" Bottom="-inf" />
+  </div>
+</body>

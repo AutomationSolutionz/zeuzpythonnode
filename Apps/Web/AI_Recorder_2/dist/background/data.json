@@ -1,10 +1,10 @@
 {
-    "testNo": "TEST-0000",
-    "testName": "Test_name",
-    "stepNo": 0,
-    "stepName": "Step_name",
-    "url": "",
-    "apiKey": "",
+    "testNo": "TEST-11192",
+    "testName": "zeuz> web> level2> test> Edit Delete Test",
+    "stepNo": 1,
+    "stepName": "GO TO Link",
+    "url": "https://qa.automationsolutionz.com",
+    "apiKey": "40f52270-3cb0-4d35-96be-fff6c185dfa3",
     "jwtKey": "",
-    "nodeId": ""
+    "nodeId": "towhid_9421b022-1"
 }
