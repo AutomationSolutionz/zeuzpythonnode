@@ -426,9 +426,6 @@ def update_machine_info(node_id, should_print=True):
     RequestFormatter.Get("update_machine_with_time_api", {"machine_name": node_id})
 
 
-import sys
-import os
-import platform
 from plyer import notification
 
 def get_icon_path():
