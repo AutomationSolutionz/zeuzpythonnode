@@ -583,8 +583,11 @@ def parse_variable(name):
             elif len(indices) == 1:
                 result = result[0]
 
-            # Print to console.
-            # CommonUtil.prettify(copy_of_name, result)
+            # send variable value in report logs and terminal
+            if shared_variables['run_time_params']['log_variable_value'] is True:
+                CommonUtil.AddVariableToLog(sModuleInfo, copy_of_name, result)
+                #CommonUtil.prettify(copy_of_name, result)
+            
             return result
         elif len(indices) > 0 and re.search("^[a-zA-Z_][a-zA-Z_0-9]*\(", name) and Test_Shared_Variables(name[: name.find("(")]) and type(Get_Shared_Variables(name[: name.find("(")], log=False)) not in (type(lambda a:a), type(a)):
             # regex: startswith valid_var_name(
@@ -606,7 +609,12 @@ def parse_variable(name):
             if len(indices) == 1:
                 result = result[0]
 
-            # CommonUtil.prettify(copy_of_name, result)
+            # send variable value in report logs and terminal
+            if shared_variables['run_time_params']['log_variable_value'] is True:
+                CommonUtil.AddVariableToLog(sModuleInfo, copy_of_name, result)
+                #CommonUtil.prettify(copy_of_name, result)
+
+
             return result
         else:
             val = eval(name, shared_variables)
@@ -617,9 +625,11 @@ def parse_variable(name):
                     val_to_print = '*****'
                     break
 
-            # Print to console.
-            # if not "os.environ" in name:
-                # CommonUtil.prettify(copy_of_name, val_to_print)
+            # send variable value in report logs and terminal
+            if str(shared_variables['log_variable_value']).lower() in {"on", "yes", "true", "1"}:
+                CommonUtil.AddVariableToLog(sModuleInfo, copy_of_name, val_to_print)
+                #CommonUtil.prettify(copy_of_name, val_to_print)
+
             return generate_zeuz_code_if_not_json_obj(val)
     except:
         return CommonUtil.Exception_Handler(sys.exc_info())
