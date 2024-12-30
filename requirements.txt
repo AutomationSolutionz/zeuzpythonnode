@@ -55,3 +55,4 @@ genson
 google-cloud-storage
 mitmproxy
 json_to_csv
+jinja2>=3.1.5 # not directly required, pinned by Snyk to avoid a vulnerability
