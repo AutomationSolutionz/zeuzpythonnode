@@ -426,6 +426,46 @@ def update_machine_info(node_id, should_print=True):
     RequestFormatter.Get("update_machine_with_time_api", {"machine_name": node_id})
 
 
+from plyer import notification
+
+def get_icon_path():
+    """
+    Returns the appropriate icon path based on the operating system.
+    Icon files are located in:
+    'Zeuz_Python_Node/Framework' relative to this script.
+    """
+    # Get the directory where this script is located
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Base relative path to the icons directory
+    icons_dir = os.path.join(
+        script_dir,
+        'Zeuz_Python_Node', 'Framework'
+    )
+
+    # Detect the Icon file name
+    icon_filename = 'zeuz.png'
+
+    # Construct the full icon path
+    icon_path = os.path.join(icons_dir, icon_filename)
+    icon_path = os.path.normpath(icon_path)
+
+    # Check if the icon file exists
+    if os.path.exists(icon_path):
+        return icon_path
+    else:
+        return None
+
+# Send the notification when run Completed
+def notify_complete() :
+    notification.notify(
+        title="Zeuz Test Case Run",
+        message="Your run has completed.",
+        app_icon=get_icon_path(),  # Use the icon path returned by get_icon_path()
+        timeout=7,
+    )
+
+
 def RunProcess(node_id, run_once=False, log_dir=None):
     try:
         # --- START websocket service connections --- #
@@ -504,6 +544,7 @@ def RunProcess(node_id, run_once=False, log_dir=None):
                 return False
 
             print("[deploy] Run complete.")
+            notify_complete()
             return False
 
         def cancel_callback():
@@ -511,6 +552,7 @@ def RunProcess(node_id, run_once=False, log_dir=None):
                 return
 
             print("[deploy] Run cancelled.")
+            notify_complete()
             CommonUtil.run_cancelled = True
 
         deploy_handler = long_poll_handler.DeployHandler(
