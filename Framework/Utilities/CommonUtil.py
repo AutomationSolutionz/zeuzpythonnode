@@ -301,9 +301,10 @@ def prettify(key, val):
     if isinstance(prettify_limit, int):
         #process the string based on negetive and positive prettify_limit value
         if prettify_limit >= 0 and len(val_output) > prettify_limit:
-            val_output = f'{val_output[:prettify_limit+1]}{val_output[-1]}\n...(truncated {len(val_output) - prettify_limit} chars)'
+            val_output = f"{val_output[:prettify_limit]}\n...(truncated {len(val_output) - prettify_limit} chars)"
         elif prettify_limit < 0:
-            val_output = f'{val_output[:prettify_limit-1]}{val_output[-1]}\n...(truncated {-prettify_limit} chars)'
+            val_output = f"{val_output[:prettify_limit]}\n...(truncated {-prettify_limit} chars)"
+
     else:
         val_output = str(val)
 
@@ -561,9 +562,9 @@ def AddVariableToLog(
     if isinstance(prettify_limit, int):
         #process the string based on negetive and positive prettify_limit value
         if prettify_limit >= 0 and len(val_output) > prettify_limit:
-            val_output = f'{val_output[:prettify_limit+1]}{val_output[-1]}'
+            val_output = f'{val_output[:prettify_limit]}'
         elif prettify_limit < 0:
-            val_output = f'{val_output[:prettify_limit-1]}{val_output[-1]}'
+            val_output = f'{val_output[:prettify_limit]}'
     else:
         val_output = str(val)
 
