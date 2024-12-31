@@ -572,7 +572,8 @@ def AddVariableToLog(
                 variable={
                     "key": key,
                     "val": val_output
-                }
+                },
+                print_Execlog = False
     )
     prettify(key, val)
 
