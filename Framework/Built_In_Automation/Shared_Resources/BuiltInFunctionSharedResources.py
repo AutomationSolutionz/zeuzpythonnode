@@ -583,6 +583,10 @@ def parse_variable(name):
             elif len(indices) == 1:
                 result = result[0]
 
+             # send variable value in report logs and terminal
+            if str(shared_variables['log_variable_value']).lower() in {"on", "yes", "true", "1"}:
+                CommonUtil.AddVariableToLog(sModuleInfo, copy_of_name, result)
+
             # Print to console.
             # CommonUtil.prettify(copy_of_name, result)
             return result
@@ -606,6 +610,9 @@ def parse_variable(name):
             if len(indices) == 1:
                 result = result[0]
 
+            if str(shared_variables['log_variable_value']).lower() in {"on", "yes", "true", "1"}:
+                CommonUtil.AddVariableToLog(sModuleInfo, copy_of_name, result)
+
             # CommonUtil.prettify(copy_of_name, result)
             return result
         else:
@@ -616,6 +623,9 @@ def parse_variable(name):
                 if each_var in name:
                     val_to_print = '*****'
                     break
+
+            if str(shared_variables['log_variable_value']).lower() in {"on", "yes", "true", "1"} and not "os.environ" in name:
+                CommonUtil.AddVariableToLog(sModuleInfo, copy_of_name, val_to_print)
 
             # Print to console.
             # if not "os.environ" in name:
