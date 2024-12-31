@@ -584,7 +584,7 @@ def parse_variable(name):
                 result = result[0]
 
              # send variable value in report logs and terminal
-            if str(shared_variables['log_variable_value']).lower() in {"on", "yes", "true", "1"}:
+            if str(shared_variables['zeuz_enable_variable_logging']).lower() in {"on", "yes", "true", "1"}:
                 CommonUtil.AddVariableToLog(sModuleInfo, copy_of_name, result)
 
             # Print to console.
@@ -610,7 +610,7 @@ def parse_variable(name):
             if len(indices) == 1:
                 result = result[0]
 
-            if str(shared_variables['log_variable_value']).lower() in {"on", "yes", "true", "1"}:
+            if str(shared_variables['zeuz_enable_variable_logging']).lower() in {"on", "yes", "true", "1"}:
                 CommonUtil.AddVariableToLog(sModuleInfo, copy_of_name, result)
 
             # CommonUtil.prettify(copy_of_name, result)
@@ -624,7 +624,7 @@ def parse_variable(name):
                     val_to_print = '*****'
                     break
 
-            if str(shared_variables['log_variable_value']).lower() in {"on", "yes", "true", "1"} and not "os.environ" in name:
+            if str(shared_variables['zeuz_enable_variable_logging']).lower() in {"on", "yes", "true", "1"} and not "os.environ" in name:
                 CommonUtil.AddVariableToLog(sModuleInfo, copy_of_name, val_to_print)
 
             # Print to console.
