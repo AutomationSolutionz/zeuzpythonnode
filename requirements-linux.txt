@@ -59,3 +59,4 @@ thefuzz
 genson
 google-cloud-storage
 mitmproxy
+plyer
