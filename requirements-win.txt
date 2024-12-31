@@ -73,3 +73,5 @@ thefuzz
 genson
 google-cloud-storage
 mitmproxy
+mysql-connector-python
+psycopg2

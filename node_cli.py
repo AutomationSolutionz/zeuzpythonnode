@@ -12,8 +12,12 @@ from dataclasses import dataclass
 from datetime import date
 from datetime import datetime as dt
 
+import psutil
+import pygetwindow as gw
+
+
 import time
-import threading
+
 
 # Disable WebdriverManager SSL verification.
 os.environ['WDM_SSL_VERIFY'] = '0'
@@ -27,9 +31,7 @@ with open(version_path, "r"):
     print(version_path.read_text().strip())
     print("[Python version]")
     print("Python " + platform.python_version() + "(" + platform.architecture()[0] + ")\n")
-from Framework.module_installer import check_min_python_version, install_missing_modules,update_outdated_modules
-
-check_min_python_version(min_python_version="3.11",show_warning=True)
+from Framework.module_installer import install_missing_modules,update_outdated_modules
 install_missing_modules()
 
 # Conditionally monkey-patch datetime module to include the `fromisoformat` method.
@@ -72,37 +74,59 @@ PROJECT_ROOT = os.path.abspath(os.curdir)
 # Append correct paths so that it can find the configuration files and other modules
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "Framework"))
 
-# kill any process that is running  from the same node folder
+# Get the current process ID
 pid = os.getpid()
 
+# Define the PID file path
 pidfile = os.path.abspath(__file__).split("node_cli.py")[0] + 'pid.txt'
 
+# Check and terminate any existing process from the PID file
 try:
-    import psutil
     pidfile_read = open(pidfile)
     pidNumber = pidfile_read.read()
     pidNumber = int("".join(pidNumber.split()))
-    print("Process ID", pidNumber)
+    print("Terminating existing process with ID:", pidNumber)
     p = psutil.Process(pidNumber)
     p.terminate()
-except:
-    pass
+except Exception as e:
+    print(f"No existing process to terminate: {e}")
 
+# Write the current PID to the file
 try:
-    f = open(pidfile, "w")
-    f.write(str(os.getpid()))
-    f.close()
-except:
-    pass
+    with open(pidfile, "w") as f:
+        f.write(str(os.getpid()))
+except Exception as e:
+    print(f"Error writing PID file: {e}")
+
+# Focus the first window of the process
+try:
+    print("Focusing on the first window of the current process...")
+    process = psutil.Process(pid)
+    # Get all windows with the current process name
+    windows = gw.getWindowsWithTitle(process.name())
+    if windows:
+        first_window = windows[0]  # Get the first window
+        print(f"Focusing on: {first_window.title}")
+        first_window.activate()  # Bring the window to the foreground
+    else:
+        print("No windows found for the current process.")
+except Exception as e:
+    print(f"Error focusing window: {e}")    
 
 
-automationLogPath = os.path.join(
-    os.path.abspath(__file__).split("node_cli.py")[0],
-    os.path.join("AutomationLog"),
-)
-if not os.path.exists(automationLogPath):
-    os.mkdir(automationLogPath)
-    print(f"Folder created: {automationLogPath}")
+
+if not os.path.exists(
+    os.path.join(
+        os.path.abspath(__file__).split("node_cli.py")[0],
+        os.path.join("AutomationLog"),
+    )
+):
+    os.mkdir(
+        os.path.join(
+            os.path.abspath(__file__).split("node_cli.py")[0],
+            os.path.join("AutomationLog"),
+        )
+    )
 
 # Tells node whether it should run a test set/deployment only once and quit.
 RUN_ONCE = False
@@ -356,17 +380,12 @@ def Login(cli=False, run_once=False, log_dir=None):
                 table.add_column("Authenticated")
                 table.add_column("[green]:heavy_check_mark:")
 
-                table.add_row("url", server_name)
                 table.add_row("Username", user_data.username)
                 table.add_row("Email", user_data.email)
                 table.add_row("Team ID", str(user_data.team_id))
                 table.add_row("Project ID", user_data.project_id)
 
                 console.print(table)
-            elif status_code == 502:
-                print(Fore.YELLOW + "Server offline. Retrying after 60s")
-                time.sleep(60)
-                continue
             else:
                 line_color = Fore.RED
                 print(line_color + "Incorrect credentials, please try again.")
@@ -391,10 +410,6 @@ def Login(cli=False, run_once=False, log_dir=None):
             }
         )
         node_id = CommonUtil.MachineInfo().getLocalUser().lower()
-        from Framework.MainDriverApi import retry_failed_report_upload
-        report_thread = threading.Thread(target=retry_failed_report_upload, daemon=True)
-        report_thread.start()
-        
         RunProcess(node_id, run_once=run_once, log_dir=log_dir)
 
     if run_once:
@@ -428,6 +443,10 @@ def update_machine_info(node_id, should_print=True):
 
 def RunProcess(node_id, run_once=False, log_dir=None):
     try:
+        PreProcess(log_dir=log_dir)
+
+        save_path = Path(ConfigModule.get_config_value("sectionOne", "temp_run_file_path", temp_ini_file))
+
         # --- START websocket service connections --- #
 
         server_url = urlparse(ConfigModule.get_config_value("Authentication", "server_address"))
@@ -452,14 +471,8 @@ def RunProcess(node_id, run_once=False, log_dir=None):
         node_json = None
         def response_callback(response: str):
             nonlocal node_json
-            nonlocal log_dir
-            if log_dir is None:
-                log_dir = temp_ini_file.parent
-            save_path = Path(log_dir)
-            if not save_path.exists():
-                print(f"Folder created: {save_path}")
+            nonlocal save_path
             save_path.mkdir(exist_ok=True, parents=True)
-            PreProcess(log_dir=log_dir)
 
             try:
                 with open(save_path / "deploy-response.txt", "w", encoding="utf-8") as f:
@@ -568,7 +581,6 @@ def PreProcess(log_dir=None):
         str(log_dir),
         current_path_file,
     )
-    print(f"Save temp_run_file_path = '{str(log_dir)}'")
     ConfigModule.add_config_value("sectionOne", "sTestStepExecLogId", "node_cli", temp_ini_file)
 
 
@@ -865,8 +877,7 @@ def command_line_args() -> Path:
         if all_arguments.log_dir:
             log_dir = Path(all_arguments.log_dir.strip())
             log_dir.mkdir(parents=True, exist_ok=True)
-            if not log_dir.exists():
-                print(f"Folder created: {log_dir}")
+
             # Try creating a temporary file to see if we have enough permissions
             # to write in the specified log directory.
             touch_file = log_dir / "touch"
@@ -932,30 +943,39 @@ def command_line_args() -> Path:
 
     folder_path = os.path.dirname(os.path.abspath(__file__)).replace(os.sep + "Framework", os.sep + '') + os.sep + 'AutomationLog'
     log_delete_interval = ConfigModule.get_config_value("Advanced Options", "log_delete_interval")
+    if log_delete_interval:
+        auto_log_subfolders = get_subfolders_created_before_n_days(folder_path,int(log_delete_interval))
+        auto_log_subfolders = [subfolder for subfolder in auto_log_subfolders if subfolder not in ['attachments','attachments_db','outdated_modules.json','temp_config.ini']]
 
-    # By default set the automation log delete interval to 7 days
-    if not isinstance(log_delete_interval,int):
-        log_delete_interval = 7
-    else:
-        if log_delete_interval <= 0:
-            log_delete_interval = 7
-
-    def delete_old_automationlog_folders():
-        while True:
-            auto_log_subfolders = get_subfolders_created_before_n_days(folder_path,int(log_delete_interval))
-            auto_log_subfolders = [subfolder for subfolder in auto_log_subfolders if subfolder not in ['attachments','attachments_db','outdated_modules.json','temp_config.ini','failed_reports']]
-
+        if auto_log_subfolders:
             for subfolder in auto_log_subfolders:
                 shutil.rmtree(subfolder)
-            if auto_log_subfolders:
-                print(f'automation_log_cleanup: deleted {len(auto_log_subfolders)} that are older than {log_delete_interval} days')
-            
-            # Check every 5 hours for old automation logs
-            time.sleep(60*60*5)
+            print(f'automation_log_cleanup: deleted {len(auto_log_subfolders)} that are older than {log_delete_interval} days')
 
-    # Create a background thread for deleting automation log
-    thread = threading.Thread(target=delete_old_automationlog_folders, daemon=True)
-    thread.start()
+    folder_path = os.path.dirname(os.path.abspath(__file__)).replace(os.sep + "Framework",
+                                                                     os.sep + '') + os.sep + 'AutomationLog'
+    log_date_str = config.get('Advanced Options', {}).get('last_log_delete_date', '')
+    log_delete_interval = config.get('Advanced Options', {}).get('log_delete_interval', '')
+    if log_date_str:
+        log_config_date = date.fromisoformat(log_date_str)
+        current_date = datetime.date.today()
+        time_difference = (current_date - log_config_date).days
+        if time_difference > int(log_delete_interval):
+            print("Cleaning Up AutomationLog Folder...")
+            for root, dirs, files in os.walk(folder_path, topdown=False):
+                for dir_name in dirs:
+                    folder = os.path.join(root, dir_name)
+                    shutil.rmtree(folder)
+            config.setdefault('Advanced Options', {})['last_log_delete_date'] = str(date.today())
+            config.write()
+        else:
+            pass
+            # remaining_time = 7 - time_difference
+            # print(f"AutomationLog Folder will be deleted after {remaining_time+1} Days")
+    else:
+        config.setdefault('Advanced Options', {})['last_log_delete_date'] = str(date.today())
+        config.write()
+        # print("AutomationLog Folder Not Found")
 
     if show_browser_log:
         CommonUtil.show_browser_log = True
