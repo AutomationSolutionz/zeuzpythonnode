@@ -6741,7 +6741,8 @@ def stop_ssh_tunnel(data_set):
     CommonUtil.ExecLog(sModuleInfo, f"SSH Tunnel is closed", 1)
 
     return "passed"
-    
+
+
 @logger
 def proxy_server(data_set):
     sModuleInfo = inspect.currentframe().f_code.co_name + " : " + MODULE_NAME
@@ -6818,3 +6819,136 @@ def proxy_server(data_set):
 
         CommonUtil.ExecLog(sModuleInfo, f"{action.capitalize()}ing proxy server on port {port}", 1)
         return "passed"
+
+
+@logger
+def is_valid_path(path):
+    """
+    Check if a given string is a valid path.
+    
+    :param path: The string to check.
+    :return: True if the string is a valid path, False otherwise.
+    """
+    try:
+        # Attempt to normalize the path
+        normalized_path = os.path.normpath(path)
+        # Check if the directory part of the path can be resolved
+        directory = os.path.dirname(normalized_path)
+        if directory:
+            return True
+    except Exception as e:
+        return False
+    return False
+
+@logger
+def json_detect_from_file_and_Data(data):
+    """
+    Detect if the input is a file path or JSON data.
+    
+    :param data: The input data (file path or JSON string).
+    :return: A dictionary containing flags, the error message (if any), and parsed data.
+    """
+    result = {
+        "Convert_file_to_file": False,  # True if file path, False if JSON string
+        "error": "",  # Error message if detection fails
+        "parsed_data": ""  # Parsed JSON data or Empty if input is invalid
+    }
+    
+    try:
+        # Check if the input is a valid file path
+        if os.path.isfile(data):
+            result["Convert_file_to_file"] = True
+            with open(data, 'r') as file:
+                result["parsed_data"] = json.load(file)  # Load JSON data from the file
+        else:
+            # Try to parse the input as JSON data
+            result["parsed_data"] = json.loads(data)
+            result["Convert_file_to_file"] = False
+    except Exception as e:
+        # Handle exceptions and set the error message
+        result["error"] = str(e)
+    
+    return result
+
+@logger
+def json_to_csv(data_set):
+    """Save JSON Data into CSV file or Variable.
+
+    Accepts any valid JSON data in file.
+
+    Args:
+        data_set:
+          input json file or Data    | element parameter  | Path to the input JSON file or Direct JSON data.
+          json to csv        | common action      | Path to the output CSV file or Output Variable Name.
+
+    Returns:
+        "passed" if success.
+        "zeuz_failed" otherwise.
+    """
+    sModuleInfo = inspect.currentframe().f_code.co_name + " : " + MODULE_NAME
+
+    try:
+        json_file = None
+        variable_name = None
+        csv_file_or_variable = ""
+        success = None
+        output = {}
+        try:
+            for left, mid, right in data_set:
+                left = left.strip().lower()
+                if "input json" in left:
+                    json_file = right.strip().lower()
+                elif "action" in mid:
+                    csv_file_or_variable = right.strip()
+
+            output = json_detect_from_file_and_Data(json_file)
+            #print(output['parsed_data']);
+            #print(output['Convert_file_to_file']);            
+            if  output["error"] != "":
+                CommonUtil.ExecLog(sModuleInfo,  output['error'], 3)
+                return "zeuz_failed"
+        except:
+            CommonUtil.ExecLog(sModuleInfo, "Failed to parse data.", 3)
+            traceback.print_exc()
+            return "zeuz_failed"
+        
+        try:
+            # TRY CONVERT FROM FILE TO FILE            
+            if is_valid_path(csv_file_or_variable):
+                success = do_json_to_csv(output["parsed_data"], csv_file_or_variable)
+                if(success):
+                    CommonUtil.ExecLog(sModuleInfo, "Successfully Saved JSON file into CSV file", 1)
+                    return "passed"
+                return "zeuz_failed" 
+            # TRY TO SAVE INTO VARIABLE
+            sr.Set_Shared_Variables(csv_file_or_variable, output["parsed_data"])
+            return "passed"
+        except Exception as e:
+            return CommonUtil.Exception_Handler(sys.exc_info())
+    except:
+        return CommonUtil.Exception_Handler(sys.exc_info())
+
+@logger
+def do_json_to_csv(data, csv_file):
+    """
+    Convert a JSON data to a CSV file.
+    
+    :param data: Input JSON data.
+    :param csv_file: Path to the output CSV file.
+    """
+    try:
+        # Check if JSON data is a list of dictionaries
+        if isinstance(data, list) and all(isinstance(item, dict) for item in data):
+            # Open the CSV file for writing
+            with open(csv_file, 'w', newline='', encoding='utf-8') as cf:
+                writer = csv.DictWriter(cf, fieldnames=data[0].keys())
+                writer.writeheader()
+                writer.writerows(data)
+            print(f"Successfully converted JSON to CSV at {csv_file}")
+            return True
+        else:
+            print("JSON file does not contain a list of dictionaries.")
+        return False
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return False

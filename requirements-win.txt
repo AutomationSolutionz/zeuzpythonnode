@@ -75,3 +75,4 @@ google-cloud-storage
 mitmproxy
 wapiti3 #security
 tabulate
+plyer

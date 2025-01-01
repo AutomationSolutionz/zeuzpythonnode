@@ -1990,6 +1990,9 @@ def main(device_dict, all_run_id_info):
             if not shared.Test_Shared_Variables("zeuz_collect_browser_log"):
                 shared.Set_Shared_Variables("zeuz_collect_browser_log", "on")
 
+            if not shared.Test_Shared_Variables("zeuz_enable_variable_logging"):
+                shared.Set_Shared_Variables("zeuz_enable_variable_logging", "False")
+
             shared.Set_Shared_Variables("run_id", run_id)
             shared.Set_Shared_Variables("node_id", CommonUtil.MachineInfo().getLocalUser())
 
