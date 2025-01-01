@@ -299,8 +299,12 @@ def prettify(key, val):
         val_output = str(val)
 
     if isinstance(prettify_limit, int):
-        if len(val_output) > prettify_limit:
-            val_output = f"{val_output[:prettify_limit]}\n...(truncated {len(val_output)-prettify_limit} chars)"
+        #process the string based on negetive and positive prettify_limit value
+        if prettify_limit >= 0 and len(val_output) > prettify_limit:
+            val_output = f"{val_output[:prettify_limit]}\n...(truncated {len(val_output) - prettify_limit} chars)"
+        elif prettify_limit < 0:
+            val_output = f"{val_output[:prettify_limit]}\n...(truncated {-prettify_limit} chars)"
+
     else:
         val_output = str(val)
 
@@ -538,6 +542,41 @@ def clear_logs_from_report(send_log_file_only_for_fail, rerun_on_fail, sTestCase
         # del step["actions"]
         if send_log_file_only_for_fail and not rerun_on_fail and sTestCaseStatus == "Passed" and "log" in step:
             del step["log"]
+
+
+def AddVariableToLog(
+        sModuleInfo, key, val
+):
+
+    # do not print variables which are marked hidden
+    if key in zeuz_disable_var_print.keys():
+        return
+
+    try:
+        if type(val) == str:
+            val = parse_value_into_object(val)
+        val_output = json.dumps(val, indent=2)
+    except:
+        val_output = str(val)
+
+    if isinstance(prettify_limit, int):
+        #process the string based on negetive and positive prettify_limit value
+        if prettify_limit >= 0 and len(val_output) > prettify_limit:
+            val_output = f'{val_output[:prettify_limit]}'
+        elif prettify_limit < 0:
+            val_output = f'{val_output[:prettify_limit]}'
+    else:
+        val_output = str(val)
+
+    ExecLog(
+                sModuleInfo, "Variable: %s" % key, 5,
+                variable={
+                    "key": key,
+                    "val": val_output
+                },
+                print_Execlog = False
+    )
+    prettify(key, val)
 
 
 def ExecLog(
