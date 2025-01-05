@@ -54,5 +54,7 @@ pyperclip
 genson
 google-cloud-storage
 mitmproxy
+wapiti3 #security
+tabulate
 json_to_csv
 plyer
