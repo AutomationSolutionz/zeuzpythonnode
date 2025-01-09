@@ -33,7 +33,6 @@ declarations = (
     { "name": "validate table row size",       "function": "validate_table_row_size",       "screenshot": "web" },
     { "name": "validate table column size",    "function": "validate_table_column_size",    "screenshot": "web" },
     { "name": "upload file",                   "function": "upload_file",                   "screenshot": "web" },
-    { "name": "upload through window",         "function": "upload_file_through_window",    "screenshot": "web" },
     { "name": "drag and drop",                 "function": "drag_and_drop",                 "screenshot": "web" },
     { "name": "get element info",              "function": "get_element_info",              "screenshot": "web" },
     { "name": "playwright",                    "function": "playwright",                    "screenshot": "web" },
