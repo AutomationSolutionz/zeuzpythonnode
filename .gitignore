@@ -58,4 +58,4 @@ web_modules/
 custom_profiles/
 
 # Security tools
-/tools/security/arachni/*
+/tools/security/*

@@ -8,6 +8,7 @@ from tabulate import tabulate
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from arachni_download import check_and_install_arachni
+from nikto_download import check_and_download_nikto
 from arachni_run import run_arachni_scan, generate_report_from_afr
 from helper import extract_target, check_perl_installed, display_table, save_report_to_file
 from Framework.Built_In_Automation.Shared_Resources import BuiltInFunctionSharedResources as sr
@@ -112,16 +113,29 @@ def server_scaning_arachni(data_set: list) -> str:
 
 def server_scaning_nikto(data_set: list) -> str:
     """
-    Runs Nikto scan if Perl is installed, otherwise gives installation instructions based on platform.
+    Runs Nikto scan if Perl is installed, otherwise provides installation instructions based on the platform.
     """
     CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
     BASE_DIR = os.path.abspath(os.path.join(CURRENT_DIR, "../../.."))
+
+    # Ensure Nikto is downloaded and ready
+    if not check_and_download_nikto():
+        return "zeuz_failed"
+
+    # Define paths after ensuring Nikto exists
     NIKTO_DIR = os.path.join(BASE_DIR, "tools", "security", "nikto", "program")
     NIKTO_SCRIPT_PATH = os.path.join(NIKTO_DIR, "nikto.pl")
-    nikto_target = next(item[2] for item in data_set if item[0] == 'nikto')
 
+    # Find the target for Nikto scan from the dataset
+    try:
+        nikto_target = next(item[2] for item in data_set if item[0] == 'nikto')
+    except StopIteration:
+        print("Error: No target specified for Nikto scan in the dataset.")
+        return "zeuz_failed"
+
+    # Check if Perl is installed
     if not check_perl_installed():
-        # Perl is not installed, print installation instructions based on platform
+        # Provide Perl installation instructions based on the platform
         system_platform = sys.platform
         installation_data = []
 
@@ -148,7 +162,7 @@ def server_scaning_nikto(data_set: list) -> str:
             display_table(installation_data, headers=["Message", "Details"], title="Perl Installation (Linux)")
         return "zeuz_failed"
 
-    # Check if the nikto.pl file exists at the correct path
+    # Check if the nikto.pl file exists
     if not os.path.exists(NIKTO_SCRIPT_PATH):
         error_data = [
             ["Error", f"Nikto script (nikto.pl) not found at {NIKTO_SCRIPT_PATH}."],
@@ -159,9 +173,12 @@ def server_scaning_nikto(data_set: list) -> str:
         return "zeuz_failed"
 
     try:
+        # Run the Nikto scan
         nikto_command = ["perl", NIKTO_SCRIPT_PATH, "-h", nikto_target]
-        print("Starting Nikto scan... Please wait this may take a while")
+        print("Starting Nikto scan... Please wait, this may take a while.")
         result = subprocess.run(nikto_command, capture_output=True, text=True, check=True)
+
+        # Save the output to a report file
         security_report_dir = Path(ConfigModule.get_config_value("sectionOne", "test_case_folder", temp_config)) / 'security_report'
         output_file_name = "nikto_scan_result.txt"
         save_report_to_file(result.stdout, security_report_dir, output_file_name)
@@ -172,4 +189,8 @@ def server_scaning_nikto(data_set: list) -> str:
     except subprocess.CalledProcessError as e:
         print("An error occurred while running Nikto:")
         print(e.stderr)
+        return "zeuz_failed"
+
+    except Exception as e:
+        print(f"Unexpected error: {e}")
         return "zeuz_failed"
