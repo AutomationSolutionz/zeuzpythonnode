@@ -8,6 +8,7 @@ from tabulate import tabulate
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from arachni_download import check_and_install_arachni
+from nikto_download import check_and_download_nikto
 from arachni_run import run_arachni_scan, generate_report_from_afr
 from helper import extract_target, check_perl_installed, display_table, save_report_to_file
 from Framework.Built_In_Automation.Shared_Resources import BuiltInFunctionSharedResources as sr
@@ -116,6 +117,12 @@ def server_scaning_nikto(data_set: list) -> str:
     """
     CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
     BASE_DIR = os.path.abspath(os.path.join(CURRENT_DIR, "../../.."))
+    
+    # Ensure Nikto is downloaded and ready
+    if not check_and_download_nikto():
+        return "zeuz_failed"
+
+    # Define NIKTO_DIR only after ensuring Nikto exists
     NIKTO_DIR = os.path.join(BASE_DIR, "tools", "security", "nikto", "program")
     NIKTO_SCRIPT_PATH = os.path.join(NIKTO_DIR, "nikto.pl")
     nikto_target = next(item[2] for item in data_set if item[0] == 'nikto')
