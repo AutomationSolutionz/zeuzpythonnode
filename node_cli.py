@@ -102,7 +102,6 @@ automationLogPath = os.path.join(
 )
 if not os.path.exists(automationLogPath):
     os.mkdir(automationLogPath)
-    print(f"Folder created: {automationLogPath}")
 
 # Tells node whether it should run a test set/deployment only once and quit.
 RUN_ONCE = False
@@ -496,8 +495,6 @@ def RunProcess(node_id, run_once=False, log_dir=None):
             if log_dir is None:
                 log_dir = temp_ini_file.parent
             save_path = Path(log_dir)
-            if not save_path.exists():
-                print(f"Folder created: {save_path}")
             save_path.mkdir(exist_ok=True, parents=True)
             PreProcess(log_dir=log_dir)
 
@@ -907,8 +904,6 @@ def command_line_args() -> Path:
         if all_arguments.log_dir:
             log_dir = Path(all_arguments.log_dir.strip())
             log_dir.mkdir(parents=True, exist_ok=True)
-            if not log_dir.exists():
-                print(f"Folder created: {log_dir}")
             # Try creating a temporary file to see if we have enough permissions
             # to write in the specified log directory.
             touch_file = log_dir / "touch"

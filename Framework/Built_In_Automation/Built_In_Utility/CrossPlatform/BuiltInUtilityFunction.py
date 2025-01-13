@@ -78,7 +78,6 @@ def CreateFolder(folderPath, forced=True):
     sModuleInfo = inspect.currentframe().f_code.co_name + " : " + MODULE_NAME
 
     try:
-        CommonUtil.ExecLog(sModuleInfo, "Creating Folder %s" % folderPath, 1)
         if os.path.isdir(folderPath):
             if forced == False:
                 # print "folder already exists"
@@ -92,7 +91,6 @@ def CreateFolder(folderPath, forced=True):
         # if the folder exists in correct position then return passed
         # if the folder doesn't exist in correct position then return failed
         if os.path.isdir(folderPath):
-            CommonUtil.ExecLog(sModuleInfo, f"Folder created: {folderPath}", 1)
             return "passed"
         else:
             CommonUtil.ExecLog(sModuleInfo, "Could not create folder", 3)
