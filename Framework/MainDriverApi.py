@@ -216,25 +216,21 @@ def create_tc_log_ss_folder(run_id, test_case, temp_ini_file, server_version):
     # create test_case_folder
     ConfigModule.add_config_value("sectionOne", "test_case", test_case, temp_ini_file)
     ConfigModule.add_config_value("sectionOne", "test_case_folder", test_case_folder, temp_ini_file)
-    CommonUtil.ExecLog(sModuleInfo, f"Creating folder: {test_case_folder}", 5)
     FL.CreateFolder(test_case_folder)
 
     # create log_folder for browser console error logs
     log_folder = test_case_folder + os.sep + "Log"
     ConfigModule.add_config_value("sectionOne", "log_folder", log_folder, temp_ini_file)
-    CommonUtil.ExecLog(sModuleInfo, f"Creating folder: {log_folder}", 5)
     FL.CreateFolder(log_folder)
 
     # create screenshot_folder
     screenshot_folder = test_case_folder + os.sep + "screenshots"
     ConfigModule.add_config_value("sectionOne", "screen_capture_folder", screenshot_folder, temp_ini_file)
-    CommonUtil.ExecLog(sModuleInfo, f"Creating folder: {screenshot_folder}", 5)
     FL.CreateFolder(screenshot_folder)
 
     # performance report folder
     performance_report = test_case_folder + os.sep + "performance_report"
     ConfigModule.add_config_value("sectionOne", "performance_report", performance_report, temp_ini_file)
-    CommonUtil.ExecLog(sModuleInfo, f"Creating folder: {performance_report}", 5)
     FL.CreateFolder(performance_report)
 
     # TODO: we'll be breaking internal server compatibility anyway
@@ -243,17 +239,14 @@ def create_tc_log_ss_folder(run_id, test_case, temp_ini_file, server_version):
         # json report folder
         json_report = test_case_folder + os.sep + "json_report"
         ConfigModule.add_config_value("sectionOne", "json_report", json_report, temp_ini_file)
-        CommonUtil.ExecLog(sModuleInfo, f"Creating folder: {json_report}", 5)
         FL.CreateFolder(json_report)
 
     # create where attachments from selenium browser will be
     # downloaded
     # ? Why are we keeping two separate download folders?
     zeuz_download_folder = test_case_folder + os.sep + "zeuz_download_folder"
-    CommonUtil.ExecLog(sModuleInfo, f"Creating folder: {zeuz_download_folder}", 5)
     FL.CreateFolder(zeuz_download_folder)
     initial_download_folder = run_id_folder + os.sep + "initial_download_folder"
-    CommonUtil.ExecLog(sModuleInfo, f"Creating folder: {initial_download_folder}", 5)
     FL.CreateFolder(initial_download_folder)
     ConfigModule.add_config_value("sectionOne", "initial_download_folder", initial_download_folder, temp_ini_file)
     shared.Set_Shared_Variables("zeuz_download_folder", zeuz_download_folder)
@@ -1800,8 +1793,6 @@ def download_attachments(testcase_info):
         elif "global_folder" in attachment["path"]:
             download_dir = attachment_path / "global"
 
-        if not download_dir.exists():
-            CommonUtil.ExecLog(sModuleInfo, f"Creating folder: {download_dir}", 5)
 
         download_dir.mkdir(parents=True, exist_ok=True)
 
@@ -1896,7 +1887,6 @@ def main(device_dict, all_run_id_info):
 
             # Write testcase json
             path = ConfigModule.get_config_value("sectionOne", "temp_run_file_path", temp_ini_file) / Path(run_id.replace(":", "-"))
-            CommonUtil.ExecLog(sModuleInfo, f"Creating folder: {path}", 5)
             FL.CreateFolder(path)
 
             if run_id.lower().startswith("debug"):
