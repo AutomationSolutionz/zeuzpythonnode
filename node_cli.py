@@ -449,7 +449,7 @@ else:
         title="Zeuz Test Case Run",
         message="Your run has completed.",
         app_icon="zeuz.ico",
-        timeout=20
+        timeout=7
     )
 
 
