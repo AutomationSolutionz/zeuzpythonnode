@@ -434,23 +434,24 @@ else:
     # Linux and Windows
     from plyer import notification
 
+def notify_complete() :
+    if current_platform.startswith('darwin'):
+        # macOS - Use notifypy
+        notification1 = Notify(
+            default_notification_title="Zeuz Test Case Run",
+            default_notification_icon="zeuz.ico",
+        )
+        notification1.message = "Your run has completed."
+        notification1.send()
+    else:
+        # Linux and Windows - Use plyer
+        notification.notify(
+            title="Zeuz Test Case Run",
+            message="Your run has completed.",
+            app_icon="zeuz.ico",
+            timeout=7
+        )
 
-if current_platform.startswith('darwin'):
-    # macOS - Use notifypy
-    notification1 = Notify(
-        default_notification_title="Zeuz Test Case Run",
-        default_notification_icon="zeuz.ico",
-    )
-    notification1.message = "Your run has completed."
-    notification1.send()
-else:
-    # Linux and Windows - Use plyer
-    notification.notify(
-        title="Zeuz Test Case Run",
-        message="Your run has completed.",
-        app_icon="zeuz.ico",
-        timeout=7
-    )
 
 
 def RunProcess(node_id, run_once=False, log_dir=None):
