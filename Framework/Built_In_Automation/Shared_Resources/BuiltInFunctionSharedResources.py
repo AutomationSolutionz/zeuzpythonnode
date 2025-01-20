@@ -590,7 +590,7 @@ def parse_variable(name):
             # Print to console.
             # CommonUtil.prettify(copy_of_name, result)
             return result
-        elif len(indices) > 0 and re.search("^[a-zA-Z_][a-zA-Z_0-9]*\(", name) and Test_Shared_Variables(name[: name.find("(")]) and type(Get_Shared_Variables(name[: name.find("(")], log=False)) not in (type(lambda a:a), type(a)):
+        elif len(indices) > 0 and re.search(r"^[a-zA-Z_][a-zA-Z_0-9]*\(", name) and Test_Shared_Variables(name[: name.find("(")]) and type(Get_Shared_Variables(name[: name.find("(")], log=False)) not in (type(lambda a:a), type(a)):
             # regex: startswith valid_var_name(
             # Data collector with keys.
             # Match with the following pattern.
@@ -656,7 +656,7 @@ def get_previous_response_variables_in_strings(step_data_string_input):
                     params = temp[1].split(")")[0]
                     if isinstance(CommonUtil.parse_value_into_object(params.strip()), list):
                         random_string = str(random.choice(CommonUtil.parse_value_into_object(params.strip())))
-                    elif re.search("^\s*\d+\s*-{1}\s*\d+\s*$", params):
+                    elif re.search(r"^\s*\d+\s*-{1}\s*\d+\s*$", params):
                         start, end = params.replace(" ", "").split("-")
                         random_string = str(random.randrange(int(start), int(end), 1))
                     elif "," in params:

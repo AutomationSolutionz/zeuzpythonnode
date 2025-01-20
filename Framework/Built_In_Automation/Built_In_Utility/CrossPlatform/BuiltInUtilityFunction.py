@@ -3460,12 +3460,12 @@ def extract_number(data_set):
                 all_digit = [s for s in re.findall(r"-?\d+\.?\d*", from_var)]
                 extracted_number = all_digit[index - 1]
 
-                if re.match("-?\d+?\.\d+?$", digit) is None:
+                if re.match(r"-?\d+?\.\d+?$", digit) is None:
                     digit = int(digit)
                 else:
                     digit = float(digit)
 
-                if re.match("-?\d+?\.\d+?$", extracted_number) is None:
+                if re.match(r"-?\d+?\.\d+?$", extracted_number) is None:
                     extracted_number = int(extracted_number)
                 else:
                     extracted_number = float(extracted_number)
@@ -3660,7 +3660,7 @@ def str_to_int(sModuleInfo, in_variable_value, ceil_floor_round):
     """
     if isinstance(in_variable_value, str):
         if (
-            re.match("^[-+]?\d+?\.\d+?$", in_variable_value)
+            re.match(r"^[-+]?\d+?\.\d+?$", in_variable_value)
         ):  # Checking if the string has float number
             if ceil_floor_round == "ceil":
                 out_variable_value = int(ceil(float(in_variable_value)))
@@ -3742,7 +3742,7 @@ def str_to_float(sModuleInfo, in_variable_value, decimal_point, decimal_conditio
 
     if isinstance(in_variable_value, str):
         if (
-            re.match("^[-+]?\d+?\.\d+?$", in_variable_value)
+            re.match(r"^[-+]?\d+?\.\d+?$", in_variable_value)
         ):  # Checking if the string has float number
             if decimal_condition:
                 out_variable_value = round(float(in_variable_value), decimal_point)
@@ -3866,7 +3866,7 @@ def extract_num_from_str(
             CommonUtil.ExecLog(sModuleInfo, "Your string has no number to be extracted so returning the string as it is", 1)
             out_variable_value = in_variable_value
         elif (
-            re.match("^[-+]?\d+?\.\d+?$", extracted_number)
+            re.match(r"^[-+]?\d+?\.\d+?$", extracted_number)
         ):  # Checking if the extracted num has float number
             if ceil_floor_round == "ceil":
                 out_variable_value = ceil(float(extracted_number))
