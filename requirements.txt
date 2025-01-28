@@ -58,3 +58,4 @@ wapiti3
 tabulate
 json_to_csv
 plyer
+notify_py

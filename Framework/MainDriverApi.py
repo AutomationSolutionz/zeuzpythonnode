@@ -37,7 +37,6 @@ from Framework.Built_In_Automation.Shared_Resources import (
 from settings import PROJECT_ROOT
 from reporting import junit_report
 
-from jinja2 import Environment, FileSystemLoader
 from genson import SchemaBuilder
 import selenium
 
@@ -743,25 +742,6 @@ def calculate_test_case_result(sModuleInfo, TestCaseID, run_id, sTestStepResultL
 
 
 # writes the log file for a test case
-def zip_and_delete_tc_folder_old(
-    sTestCaseStatus,
-    temp_ini_file,
-    send_log_file_only_for_fail=True,
-):
-    # if settings checked, then send log file or screenshots, otherwise don't send
-    sModuleInfo = inspect.currentframe().f_code.co_name + " : " + MODULE_NAME
-    if sTestCaseStatus not in passed_tag_list or sTestCaseStatus in passed_tag_list and not send_log_file_only_for_fail:
-        if ConfigModule.get_config_value("RunDefinition", "local_run") == "False":
-            FL.ZipFolder(
-                ConfigModule.get_config_value("sectionOne", "test_case_folder", temp_ini_file),
-                ConfigModule.get_config_value("sectionOne", "test_case_folder", temp_ini_file) + ".zip",
-            )
-    path = ConfigModule.get_config_value("sectionOne", "test_case_folder", temp_ini_file)
-    CommonUtil.ExecLog(sModuleInfo, f"Deleting folder: {path}", 5)
-    FL.DeleteFolder(path)
-
-
-# writes the log file for a test case
 def zip_and_delete_tc_folder(
     run_id,
     TestCaseID,
@@ -1047,22 +1027,6 @@ def run_test_case(
             with open(test_case_folder2 + '/logerror.txt', 'w') as f:
                 f.write(CommonUtil.error_log_info)
 
-
-        # write locust file for performance testing
-        if performance:
-            locust_output_file_path = (
-                os.getcwd()
-                + os.sep
-                + "Built_In_Automation"
-                + os.sep
-                + "Performance_Testing"
-                + os.sep
-                + "locustFileOutput.txt"
-            )
-            file = open(locust_output_file_path, "a+")
-            file.write(sTestCaseStatus + "-" + str(",".join(sTestStepResultList)) + "\n")
-            file.close()
-
         # Time it took to run the test case
         TimeDiff = TestCaseEndTime - TestCaseStartTime
         TimeInSec = int(TimeDiff)
@@ -1146,21 +1110,13 @@ def run_test_case(
             shared.Clean_Up_Shared_Variables(run_id)
 
             if ConfigModule.get_config_value("RunDefinition", "local_run") == "False":
-
-                if float(server_version.split(".")[0]) < 7:
-                    zip_and_delete_tc_folder_old(
-                        sTestCaseStatus,
-                        temp_ini_file,
-                        send_log_file_only_for_fail
-                    )
-                else:
-                    zip_and_delete_tc_folder(
-                        run_id,
-                        TestCaseID,
-                        sTestCaseStatus,
-                        temp_ini_file,
-                        send_log_file_only_for_fail
-                    )
+                zip_and_delete_tc_folder(
+                    run_id,
+                    TestCaseID,
+                    sTestCaseStatus,
+                    temp_ini_file,
+                    send_log_file_only_for_fail
+                )
         return "passed"
     except:
         CommonUtil.Exception_Handler(sys.exc_info())
@@ -1525,18 +1481,6 @@ def upload_reports_and_zips(temp_ini_file, run_id):
                         del step["log"]
             perf_report_html = None
             processed_tc_id = None
-            if CommonUtil.processed_performance_data:
-                env = Environment(loader=FileSystemLoader('../reporting/html_templates'))
-                template = env.get_template('pref_report.html')
-                html = template.render(CommonUtil.processed_performance_data)
-                # Save the rendered HTML to a file
-                processed_tc_id = CommonUtil.processed_performance_data["tc_id"].replace(":", "-")
-                file_name = CommonUtil.processed_performance_data["tc_id"].replace(":", "-") + ".html"
-                with open(zip_dir / file_name, "w", encoding="utf-8") as file:
-                    file.write(html)
-                    CommonUtil.ExecLog(sModuleInfo, "Performance report template generated successfully!", 1)
-                CommonUtil.processed_performance_data.clear()
-                perf_report_html = open(zip_dir / file_name, 'rb')
 
             for _ in range(5):
                 try:
@@ -2127,7 +2071,7 @@ def main(device_dict, all_run_id_info):
                                 sModuleInfo, "Performance Test Results Uploaded Successfully", 1
                             )
                         except Exception as e:
-                            CommonUtil.ExecLog(sModuleInfo, e, 3)
+                            CommonUtil.ExecLog(sModuleInfo, str(e), 3)
                             run_test_case(
                                 test_case_no,
                                 sModuleInfo,
@@ -2178,8 +2122,6 @@ def main(device_dict, all_run_id_info):
                     "duration": TestSetDuration
                 }
                 CommonUtil.CreateJsonReport(setInfo=after_execution_dict)
-
-                CommonUtil.generate_time_based_performance_report(each_session)
 
                 # Complete all step_reports and then send tc report
                 if "step_report" in CommonUtil.all_threads:
@@ -2237,8 +2179,6 @@ def main(device_dict, all_run_id_info):
             CommonUtil.run_cancelled = False
             if ConfigModule.get_config_value("RunDefinition", "local_run") == "True":
                 input("[Local run] Press any key to finish")
-
-            break   # Todo: remove this after server side multiple run-id problem is fixed
 
         return "pass"
     except:

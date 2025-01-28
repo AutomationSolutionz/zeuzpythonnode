@@ -62,3 +62,4 @@ mitmproxy
 wapiti3
 tabulate
 plyer
+notify_py
