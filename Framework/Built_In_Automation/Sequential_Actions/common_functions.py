@@ -137,7 +137,7 @@ def sanitize(step_data):
         column = [0, 1, 2]
 
         # Invalid character list (space and underscore hare handle separately)
-        invalid_chars = "!\"#$%&'()*+,-./:;<=>?@[\]^`{|}~"
+        invalid_chars = r"!\"#$%&'()*+,-./:;<=>?@[\]^`{|}~"
 
         # Adjust invalid character list, based on function input
 

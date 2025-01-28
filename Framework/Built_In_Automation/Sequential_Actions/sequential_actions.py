@@ -193,7 +193,7 @@ def get_data_set_nums(action_value, step_loop=False):
         action_value = action_value.replace('nextactions', str([i for i in range(int(CommonUtil.current_action_no)+1, len(CommonUtil.all_step_dataset[int(CommonUtil.current_step_no)-1])+1)])[1:-1])
         action_value = action_value.replace('nextsteps', str([i for i in range(int(CommonUtil.current_step_no)+1, len(CommonUtil.all_step_dataset))])[1:-1])
         if 'next' in action_value:
-            for each in set(['next' + m for m in re.findall('next([-+]\d+)?', action_value)]):
+            for each in set(['next' + m for m in re.findall(r'next([-+]\d+)?', action_value)]):
                 if each == 'next':
                     continue
                 if step_loop:
@@ -205,7 +205,7 @@ def get_data_set_nums(action_value, step_loop=False):
             else:
                 action_value = action_value.replace('next', str(int(CommonUtil.current_action_no)+1))
         if 'this' in action_value:
-            for each in set(['this' + m for m in re.findall('this([-+]\d+)?', action_value)]):
+            for each in set(['this' + m for m in re.findall(r'this([-+]\d+)?', action_value)]):
                 if each == 'this':
                     continue
                 if step_loop:
@@ -381,7 +381,7 @@ def If_else_action(step_data, data_set_no):
                         correct = correct.replace('%|', '').replace('|%', '')
                         correct = statement + correct[len(statement):]
 
-                        true = re.findall('==\s*True', correct)
+                        true = re.findall(r'==\s*True', correct)
                         if len(true) > 0:
                             for i in true:
                                 correct_2 = correct.replace(i, "")
@@ -619,7 +619,7 @@ def for_loop_action(step_data, data_set_no):
                     CommonUtil.ExecLog(sModuleInfo, "'if' keyword is not provided at beginning", 3)
                     return "zeuz_failed", []
                 value = row[2].strip()
-                if (row[1].strip().lower() == "optional loop control" and "pass" in value.lower()) or (row[1].strip().lower() == "optional loop settings" and re.search("if\s+([0-9\-\,\s]+|any)\s+pass", value.lower())):
+                if (row[1].strip().lower() == "optional loop control" and "pass" in value.lower()) or (row[1].strip().lower() == "optional loop settings" and re.search(r"if\s+([0-9\-\,\s]+|any)\s+pass", value.lower())):
                     if step_loop:
                         CommonUtil.ExecLog(sModuleInfo, "Step pass control is not implemented yet for step looping", 2)
                     else:
@@ -627,7 +627,7 @@ def for_loop_action(step_data, data_set_no):
                             exit_loop_and_fail["pass"][step_index] += loop_steps[step_index]
                         else:
                             exit_loop_and_fail["pass"][step_index] += get_data_set_nums(value)
-                elif (row[1].strip().lower() == "optional loop control" and "fail" in value.lower()) or (row[1].strip().lower() == "optional loop settings" and re.search("if\s+([0-9\-\,\s]+|any)\s+fail", value.lower())):
+                elif (row[1].strip().lower() == "optional loop control" and "fail" in value.lower()) or (row[1].strip().lower() == "optional loop settings" and re.search(r"if\s+([0-9\-\,\s]+|any)\s+fail", value.lower())):
                     if step_loop:
                         if "any" in value.lower():
                             exit_loop_and_fail["fail"] = copy.deepcopy(loop_steps)
@@ -647,13 +647,13 @@ def for_loop_action(step_data, data_set_no):
                     CommonUtil.ExecLog(sModuleInfo, "'if' keyword is not provided at beginning", 3)
                     return "zeuz_failed", []
                 value = row[2].strip()
-                if (row[1].strip().lower() == "optional loop control" and "pass" in value.lower()) or (row[1].strip().lower() == "optional loop settings" and re.search("if\s+([0-9\-\,\s]+|any)\s+pass", value.lower())):
+                if (row[1].strip().lower() == "optional loop control" and "pass" in value.lower()) or (row[1].strip().lower() == "optional loop settings" and re.search(r"if\s+([0-9\-\,\s]+|any)\s+pass", value.lower())):
                     if step_loop:
                         CommonUtil.ExecLog(sModuleInfo, "Step pass control is not implemented yet for step looping", 2)
                     else:
                         if "any" in value.lower(): exit_loop_and_cont["pass"] += loop_steps[step_index]
                         else: exit_loop_and_cont["pass"][step_index] += get_data_set_nums(value)
-                elif (row[1].strip().lower() == "optional loop control" and "fail" in value.lower()) or (row[1].strip().lower() == "optional loop settings" and re.search("if\s+([0-9\-\,\s]+|any)\s+fail", value.lower())):
+                elif (row[1].strip().lower() == "optional loop control" and "fail" in value.lower()) or (row[1].strip().lower() == "optional loop settings" and re.search(r"if\s+([0-9\-\,\s]+|any)\s+fail", value.lower())):
                     if step_loop:
                         if "any" in value.lower():
                             exit_loop_and_cont["fail"] = copy.deepcopy(loop_steps)
@@ -673,13 +673,13 @@ def for_loop_action(step_data, data_set_no):
                     CommonUtil.ExecLog(sModuleInfo, "'if' keyword is not provided at beginning", 3)
                     return "zeuz_failed", []
                 value = row[2].strip()
-                if (row[1].strip().lower() == "optional loop control" and "pass" in value.lower()) or (row[1].strip().lower() == "optional loop settings" and re.search("if\s+([0-9\-\,\s]+|any)\s+pass", value.lower())):
+                if (row[1].strip().lower() == "optional loop control" and "pass" in value.lower()) or (row[1].strip().lower() == "optional loop settings" and re.search(r"if\s+([0-9\-\,\s]+|any)\s+pass", value.lower())):
                     if step_loop:
                         CommonUtil.ExecLog(sModuleInfo, "Step pass control is not implemented yet for step looping", 2)
                     else:
                         if "any" in value.lower(): continue_next_iter["pass"][step_index] += loop_steps[step_index]
                         else: continue_next_iter["pass"][step_index] += get_data_set_nums(value)
-                elif (row[1].strip().lower() == "optional loop control" and "fail" in value.lower()) or (row[1].strip().lower() == "optional loop settings" and re.search("if\s+([0-9\-\,\s]+|any)\s+fail", value.lower())):
+                elif (row[1].strip().lower() == "optional loop control" and "fail" in value.lower()) or (row[1].strip().lower() == "optional loop settings" and re.search(r"if\s+([0-9\-\,\s]+|any)\s+fail", value.lower())):
                     if step_loop:
                         if "any" in value.lower():
                             continue_next_iter["fail"] = copy.deepcopy(loop_steps)
