@@ -986,7 +986,7 @@ def sanitize_string(strg, valid_chars="", clean_whitespace_only=False, maxLength
     """
 
     # Invalid character list (space and underscore are handle separately)
-    invalid_chars = "!\"#$%&'()*+,-./:;<=>?@[\]^`{|}~"
+    invalid_chars = r"!\"#$%&'()*+,-./:;<=>?@[\]^`{|}~"
 
     # Adjust invalid character list, based on function input
     for j in range(len(valid_chars)):  # For each valid character
