@@ -398,7 +398,7 @@ def Login(cli=False, run_once=False, log_dir=None):
         from Framework.MainDriverApi import retry_failed_report_upload
         report_thread = threading.Thread(target=retry_failed_report_upload, daemon=True)
         report_thread.start()
-        
+
         RunProcess(node_id, run_once=run_once, log_dir=log_dir)
 
     if run_once:
@@ -440,23 +440,25 @@ else:
     from plyer import notification
 
 def notify_complete() :
-    if current_platform.startswith('darwin'):
-        # macOS - Use notifypy
-        notification1 = Notify(
-            default_notification_title="Zeuz Test Case Run",
-            default_notification_icon="zeuz.ico",
-        )
-        notification1.message = "Your run has completed."
-        notification1.send()
-    else:
-        # Linux and Windows - Use plyer
-        notification.notify(
-            title="Zeuz Test Case Run",
-            message="Your run has completed.",
-            app_icon="zeuz.ico",
-            timeout=7
-        )
-
+    try:
+        if current_platform.startswith('darwin'):
+            # macOS - Use notifypy
+            notification1 = Notify(
+                default_notification_title="Zeuz Test Case Run",
+                default_notification_icon="zeuz.ico",
+            )
+            notification1.message = "Your run has completed."
+            notification1.send()
+        else:
+            # Linux and Windows - Use plyer
+            notification.notify(
+                title="Zeuz Test Case Run",
+                message="Your run has completed.",
+                app_icon="zeuz.ico",
+                timeout=7
+            )
+    except:
+        print("Failed to send notification")
 
 
 def RunProcess(node_id, run_once=False, log_dir=None):
@@ -535,7 +537,7 @@ def RunProcess(node_id, run_once=False, log_dir=None):
                 return False
 
             print("[deploy] Run complete.")
-            notify_complete()
+            if(CommonUtil.debug_status == True): notify_complete()
             return False
 
         def cancel_callback():
@@ -543,7 +545,7 @@ def RunProcess(node_id, run_once=False, log_dir=None):
                 return
 
             print("[deploy] Run cancelled.")
-            notify_complete()
+            if(CommonUtil.debug_status == True): notify_complete()
             CommonUtil.run_cancelled = True
 
         deploy_handler = long_poll_handler.DeployHandler(
@@ -980,7 +982,7 @@ def command_line_args() -> Path:
                 shutil.rmtree(subfolder)
             if auto_log_subfolders:
                 print(f'automation_log_cleanup: deleted {len(auto_log_subfolders)} that are older than {log_delete_interval} days')
-            
+
             # Check every 5 hours for old automation logs
             time.sleep(60*60*5)
 
@@ -1078,3 +1080,4 @@ if __name__ == "__main__":
 
     CommonUtil.run_cancelled = True
     CommonUtil.ShutdownExecutor()
+
