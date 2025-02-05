@@ -1175,15 +1175,17 @@ def Enter_Text_In_Text_Box(step_data):
                 if selenium_driver.capabilities['browserName'] == "Safari":
                     Element.clear()
                 else:
-                    if sys.platform == "darwin":
-                        Element.send_keys(Keys.COMMAND, "a")
-                    else:
-                        Element.send_keys(Keys.CONTROL, "a")
-                    Element.send_keys(Keys.DELETE)
                     try:
-                        Element.clear() #some cases it works .. so adding it here just incase
+                        if sys.platform == "darwin":
+                            Element.send_keys(Keys.COMMAND, "a")
+                        else:
+                            Element.send_keys(Keys.CONTROL, "a") 
+                        Element.send_keys(Keys.DELETE)
                     except:
-                        pass
+                        try:
+                            Element.clear()
+                        except:
+                            pass
             if delay == 0:
                 Element.send_keys(text_value)
             else:
