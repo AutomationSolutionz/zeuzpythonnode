@@ -1171,7 +1171,7 @@ def Enter_Text_In_Text_Box(step_data):
                 CommonUtil.ExecLog(sModuleInfo, "Entering text without clicking the element", 2)
             if clear:
                 # Element.clear()
-                # Safari Keys are extremely slow and not working
+                # Safari Keys are extremely slow and not  working
                 if selenium_driver.capabilities['browserName'] == "Safari":
                     Element.clear()
                 else:
@@ -2851,7 +2851,7 @@ def switch_iframe(step_data):
                             CommonUtil.ExecLog(sModuleInfo, "Frame switched to index %s" % right.strip(), 1)
                             break
                         CommonUtil.ExecLog(sModuleInfo,
-                                "Frame index = %s not found. retrying after 2 sec wait" % right.strip(), 2)
+                                         "Frame index = %s not found. retrying after 2 sec wait" % right.strip(), 2)
                         time.sleep(2)
                     else:
                         CommonUtil.ExecLog(sModuleInfo, "Index out of range. Total %s frames found." % len(frames), 3)
