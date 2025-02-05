@@ -1171,7 +1171,7 @@ def Enter_Text_In_Text_Box(step_data):
                 CommonUtil.ExecLog(sModuleInfo, "Entering text without clicking the element", 2)
             if clear:
                 # Element.clear()
-                # Safari Keys are extremely slow and not  working
+                # Safari Keys are extremely slow and not working
                 if selenium_driver.capabilities['browserName'] == "Safari":
                     Element.clear()
                 else:
