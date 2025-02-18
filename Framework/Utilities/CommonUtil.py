@@ -299,8 +299,12 @@ def prettify(key, val):
         val_output = str(val)
 
     if isinstance(prettify_limit, int):
-        if len(val_output) > prettify_limit:
-            val_output = f"{val_output[:prettify_limit]}\n...(truncated {len(val_output)-prettify_limit} chars)"
+        #process the string based on negetive and positive prettify_limit value
+        if prettify_limit >= 0 and len(val_output) > prettify_limit:
+            val_output = f"{val_output[:prettify_limit]}\n...(truncated {len(val_output) - prettify_limit} chars)"
+        elif prettify_limit < 0:
+            val_output = f"{val_output[:prettify_limit]}\n...(truncated {-prettify_limit} chars)"
+
     else:
         val_output = str(val)
 
@@ -538,6 +542,41 @@ def clear_logs_from_report(send_log_file_only_for_fail, rerun_on_fail, sTestCase
         # del step["actions"]
         if send_log_file_only_for_fail and not rerun_on_fail and sTestCaseStatus == "Passed" and "log" in step:
             del step["log"]
+
+
+def AddVariableToLog(
+        sModuleInfo, key, val
+):
+
+    # do not print variables which are marked hidden
+    if key in zeuz_disable_var_print.keys():
+        return
+
+    try:
+        if type(val) == str:
+            val = parse_value_into_object(val)
+        val_output = json.dumps(val, indent=2)
+    except:
+        val_output = str(val)
+
+    if isinstance(prettify_limit, int):
+        #process the string based on negetive and positive prettify_limit value
+        if prettify_limit >= 0 and len(val_output) > prettify_limit:
+            val_output = f'{val_output[:prettify_limit]}'
+        elif prettify_limit < 0:
+            val_output = f'{val_output[:prettify_limit]}'
+    else:
+        val_output = str(val)
+
+    ExecLog(
+                sModuleInfo, "Variable: %s" % key, 5,
+                variable={
+                    "key": key,
+                    "val": val_output
+                },
+                print_Execlog = False
+    )
+    prettify(key, val)
 
 
 def ExecLog(
@@ -1274,24 +1313,12 @@ def calculated_percentile(elapsed_times: Dict[int, int], total_requests: int, pe
                 return key
 
 
-def generate_time_based_performance_report(session) -> None:
+def generate_time_based_performance_report(run_id, tc_id, teststarttime, testendtime, duration, perf_data):
     """
     Generate the time based performance report
     :param session:
     """
     # print("Generating Performance Report")
-
-    if "execution_detail" not in session["test_cases"][0]:
-        return
-    elif "metrics" not in session['test_cases'][0]['execution_detail']:
-        return
-
-    perf_data = session['test_cases'][0]['execution_detail']['metrics']['node']['api_performance_data']
-    run_id = session['run_id']
-    teststarttime = session['test_cases'][0]['execution_detail']['teststarttime']
-    testendtime = session['test_cases'][0]['execution_detail']['testendtime']
-    duration = session['test_cases'][0]['execution_detail']['duration']
-    tc_id = session['test_cases'][0]['testcase_no']
 
     endpoint_wise = {}
 
@@ -1398,7 +1425,7 @@ def generate_time_based_performance_report(session) -> None:
 
     global processed_performance_data
     processed_performance_data = data
-    return
+    return data
 
 
 if __name__ == "__main__":

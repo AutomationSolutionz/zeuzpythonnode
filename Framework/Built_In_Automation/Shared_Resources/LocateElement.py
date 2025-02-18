@@ -387,7 +387,7 @@ def text_filter(step_data_set, Filter, element_wait, return_all_elements):
         similar_texts = []
         for element in result:
             for f in filters:
-                if element.text not in similar_texts and f[2].lower().replace("\xa0", "").replace(" ", "") in re.sub('\s+', '', element.text.lower().replace("\xa0", "")):
+                if element.text not in similar_texts and f[2].lower().replace("\xa0", "").replace(" ", "") in re.sub(r'\s+', '', element.text.lower().replace("\xa0", "")):
                     similar_texts.append(element.text)
                 if f[0].startswith("**") and f[2].lower().replace("\xa0", " ") in element.text.lower().replace("\xa0", " "):
                     break

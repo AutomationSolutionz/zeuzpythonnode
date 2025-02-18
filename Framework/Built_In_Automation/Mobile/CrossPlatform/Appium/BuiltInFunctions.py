@@ -3354,7 +3354,7 @@ def get_program_names(search_name):
         res = ""
         for line in p.stdout:
             res += line.replace("\\r", "").replace("\r", "").replace("\\n", "\n")
-            p = re.compile("MAIN:.*?\s+([\w\.]+)/([\w\.]+)", re.S)
+            p = re.compile(r"MAIN:.*?\s+([\w\.]+)/([\w\.]+)", re.S)
             m = p.search(str(res))
             try:
                 if m.group(1) != "" and m.group(2) != "":

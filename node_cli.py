@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # -*- coding: cp1252 -*-
-import os
+import os, sys
 import shutil
 from pathlib import Path
 from urllib.parse import urlparse
@@ -24,9 +24,14 @@ with open(version_path, "r"):
     text = text[text.find("=")+1:].split("\n")[0].strip()
     if os.name == "nt":
         os.system("title " + "Python " + platform.python_version() + "(" + platform.architecture()[0] + ")" + " -- ZeuZ Node " + text)
-    print(version_path.read_text().strip())
-    print("[Python version]")
-    print("Python " + platform.python_version() + "(" + platform.architecture()[0] + ")\n")
+    # ToDo: Uncomment when we start node versioning properly
+    # print(version_path.read_text().strip())
+
+print("[Python version]")
+print("Python " + platform.python_version() + "(" + platform.architecture()[0] + ")\n")
+print("[Python Executable]")
+print(sys.executable)
+
 from Framework.module_installer import check_min_python_version, install_missing_modules,update_outdated_modules
 
 check_min_python_version(min_python_version="3.11",show_warning=True)
@@ -102,7 +107,6 @@ automationLogPath = os.path.join(
 )
 if not os.path.exists(automationLogPath):
     os.mkdir(automationLogPath)
-    print(f"Folder created: {automationLogPath}")
 
 # Tells node whether it should run a test set/deployment only once and quit.
 RUN_ONCE = False
@@ -394,7 +398,7 @@ def Login(cli=False, run_once=False, log_dir=None):
         from Framework.MainDriverApi import retry_failed_report_upload
         report_thread = threading.Thread(target=retry_failed_report_upload, daemon=True)
         report_thread.start()
-        
+
         RunProcess(node_id, run_once=run_once, log_dir=log_dir)
 
     if run_once:
@@ -424,6 +428,37 @@ def update_machine_info(node_id, should_print=True):
         "machine": node_id,
     })
     RequestFormatter.Get("update_machine_with_time_api", {"machine_name": node_id})
+
+
+
+current_platform = sys.platform.lower()
+if current_platform.startswith('darwin'):
+    # macOS
+    from notifypy import Notify
+else:
+    # Linux and Windows
+    from plyer import notification
+
+def notify_complete() :
+    try:
+        if current_platform.startswith('darwin'):
+            # macOS - Use notifypy
+            notification1 = Notify(
+                default_notification_title="Zeuz Test Case Run",
+                default_notification_icon="zeuz.ico",
+            )
+            notification1.message = "Your run has completed."
+            notification1.send()
+        else:
+            # Linux and Windows - Use plyer
+            notification.notify(
+                title="Zeuz Test Case Run",
+                message="Your run has completed.",
+                app_icon="zeuz.ico",
+                timeout=7
+            )
+    except:
+        print("Failed to send notification")
 
 
 def RunProcess(node_id, run_once=False, log_dir=None):
@@ -456,8 +491,6 @@ def RunProcess(node_id, run_once=False, log_dir=None):
             if log_dir is None:
                 log_dir = temp_ini_file.parent
             save_path = Path(log_dir)
-            if not save_path.exists():
-                print(f"Folder created: {save_path}")
             save_path.mkdir(exist_ok=True, parents=True)
             PreProcess(log_dir=log_dir)
 
@@ -504,6 +537,7 @@ def RunProcess(node_id, run_once=False, log_dir=None):
                 return False
 
             print("[deploy] Run complete.")
+            if CommonUtil.debug_status: notify_complete()
             return False
 
         def cancel_callback():
@@ -511,6 +545,7 @@ def RunProcess(node_id, run_once=False, log_dir=None):
                 return
 
             print("[deploy] Run cancelled.")
+            if CommonUtil.debug_status: notify_complete()
             CommonUtil.run_cancelled = True
 
         deploy_handler = long_poll_handler.DeployHandler(
@@ -865,8 +900,6 @@ def command_line_args() -> Path:
         if all_arguments.log_dir:
             log_dir = Path(all_arguments.log_dir.strip())
             log_dir.mkdir(parents=True, exist_ok=True)
-            if not log_dir.exists():
-                print(f"Folder created: {log_dir}")
             # Try creating a temporary file to see if we have enough permissions
             # to write in the specified log directory.
             touch_file = log_dir / "touch"
@@ -949,7 +982,7 @@ def command_line_args() -> Path:
                 shutil.rmtree(subfolder)
             if auto_log_subfolders:
                 print(f'automation_log_cleanup: deleted {len(auto_log_subfolders)} that are older than {log_delete_interval} days')
-            
+
             # Check every 5 hours for old automation logs
             time.sleep(60*60*5)
 
@@ -1047,3 +1080,4 @@ if __name__ == "__main__":
 
     CommonUtil.run_cancelled = True
     CommonUtil.ShutdownExecutor()
+

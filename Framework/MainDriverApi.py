@@ -37,7 +37,6 @@ from Framework.Built_In_Automation.Shared_Resources import (
 from settings import PROJECT_ROOT
 from reporting import junit_report
 
-from jinja2 import Environment, FileSystemLoader
 from genson import SchemaBuilder
 import selenium
 
@@ -216,25 +215,21 @@ def create_tc_log_ss_folder(run_id, test_case, temp_ini_file, server_version):
     # create test_case_folder
     ConfigModule.add_config_value("sectionOne", "test_case", test_case, temp_ini_file)
     ConfigModule.add_config_value("sectionOne", "test_case_folder", test_case_folder, temp_ini_file)
-    CommonUtil.ExecLog(sModuleInfo, f"Creating folder: {test_case_folder}", 5)
     FL.CreateFolder(test_case_folder)
 
     # create log_folder for browser console error logs
     log_folder = test_case_folder + os.sep + "Log"
     ConfigModule.add_config_value("sectionOne", "log_folder", log_folder, temp_ini_file)
-    CommonUtil.ExecLog(sModuleInfo, f"Creating folder: {log_folder}", 5)
     FL.CreateFolder(log_folder)
 
     # create screenshot_folder
     screenshot_folder = test_case_folder + os.sep + "screenshots"
     ConfigModule.add_config_value("sectionOne", "screen_capture_folder", screenshot_folder, temp_ini_file)
-    CommonUtil.ExecLog(sModuleInfo, f"Creating folder: {screenshot_folder}", 5)
     FL.CreateFolder(screenshot_folder)
 
     # performance report folder
     performance_report = test_case_folder + os.sep + "performance_report"
     ConfigModule.add_config_value("sectionOne", "performance_report", performance_report, temp_ini_file)
-    CommonUtil.ExecLog(sModuleInfo, f"Creating folder: {performance_report}", 5)
     FL.CreateFolder(performance_report)
 
     # TODO: we'll be breaking internal server compatibility anyway
@@ -243,17 +238,14 @@ def create_tc_log_ss_folder(run_id, test_case, temp_ini_file, server_version):
         # json report folder
         json_report = test_case_folder + os.sep + "json_report"
         ConfigModule.add_config_value("sectionOne", "json_report", json_report, temp_ini_file)
-        CommonUtil.ExecLog(sModuleInfo, f"Creating folder: {json_report}", 5)
         FL.CreateFolder(json_report)
 
     # create where attachments from selenium browser will be
     # downloaded
     # ? Why are we keeping two separate download folders?
     zeuz_download_folder = test_case_folder + os.sep + "zeuz_download_folder"
-    CommonUtil.ExecLog(sModuleInfo, f"Creating folder: {zeuz_download_folder}", 5)
     FL.CreateFolder(zeuz_download_folder)
     initial_download_folder = run_id_folder + os.sep + "initial_download_folder"
-    CommonUtil.ExecLog(sModuleInfo, f"Creating folder: {initial_download_folder}", 5)
     FL.CreateFolder(initial_download_folder)
     ConfigModule.add_config_value("sectionOne", "initial_download_folder", initial_download_folder, temp_ini_file)
     shared.Set_Shared_Variables("zeuz_download_folder", zeuz_download_folder)
@@ -750,25 +742,6 @@ def calculate_test_case_result(sModuleInfo, TestCaseID, run_id, sTestStepResultL
 
 
 # writes the log file for a test case
-def zip_and_delete_tc_folder_old(
-    sTestCaseStatus,
-    temp_ini_file,
-    send_log_file_only_for_fail=True,
-):
-    # if settings checked, then send log file or screenshots, otherwise don't send
-    sModuleInfo = inspect.currentframe().f_code.co_name + " : " + MODULE_NAME
-    if sTestCaseStatus not in passed_tag_list or sTestCaseStatus in passed_tag_list and not send_log_file_only_for_fail:
-        if ConfigModule.get_config_value("RunDefinition", "local_run") == "False":
-            FL.ZipFolder(
-                ConfigModule.get_config_value("sectionOne", "test_case_folder", temp_ini_file),
-                ConfigModule.get_config_value("sectionOne", "test_case_folder", temp_ini_file) + ".zip",
-            )
-    path = ConfigModule.get_config_value("sectionOne", "test_case_folder", temp_ini_file)
-    CommonUtil.ExecLog(sModuleInfo, f"Deleting folder: {path}", 5)
-    FL.DeleteFolder(path)
-
-
-# writes the log file for a test case
 def zip_and_delete_tc_folder(
     run_id,
     TestCaseID,
@@ -1054,22 +1027,6 @@ def run_test_case(
             with open(test_case_folder2 + '/logerror.txt', 'w') as f:
                 f.write(CommonUtil.error_log_info)
 
-
-        # write locust file for performance testing
-        if performance:
-            locust_output_file_path = (
-                os.getcwd()
-                + os.sep
-                + "Built_In_Automation"
-                + os.sep
-                + "Performance_Testing"
-                + os.sep
-                + "locustFileOutput.txt"
-            )
-            file = open(locust_output_file_path, "a+")
-            file.write(sTestCaseStatus + "-" + str(",".join(sTestStepResultList)) + "\n")
-            file.close()
-
         # Time it took to run the test case
         TimeDiff = TestCaseEndTime - TestCaseStartTime
         TimeInSec = int(TimeDiff)
@@ -1153,21 +1110,13 @@ def run_test_case(
             shared.Clean_Up_Shared_Variables(run_id)
 
             if ConfigModule.get_config_value("RunDefinition", "local_run") == "False":
-
-                if float(server_version.split(".")[0]) < 7:
-                    zip_and_delete_tc_folder_old(
-                        sTestCaseStatus,
-                        temp_ini_file,
-                        send_log_file_only_for_fail
-                    )
-                else:
-                    zip_and_delete_tc_folder(
-                        run_id,
-                        TestCaseID,
-                        sTestCaseStatus,
-                        temp_ini_file,
-                        send_log_file_only_for_fail
-                    )
+                zip_and_delete_tc_folder(
+                    run_id,
+                    TestCaseID,
+                    sTestCaseStatus,
+                    temp_ini_file,
+                    send_log_file_only_for_fail
+                )
         return "passed"
     except:
         CommonUtil.Exception_Handler(sys.exc_info())
@@ -1532,18 +1481,6 @@ def upload_reports_and_zips(temp_ini_file, run_id):
                         del step["log"]
             perf_report_html = None
             processed_tc_id = None
-            if CommonUtil.processed_performance_data:
-                env = Environment(loader=FileSystemLoader('../reporting/html_templates'))
-                template = env.get_template('pref_report.html')
-                html = template.render(CommonUtil.processed_performance_data)
-                # Save the rendered HTML to a file
-                processed_tc_id = CommonUtil.processed_performance_data["tc_id"].replace(":", "-")
-                file_name = CommonUtil.processed_performance_data["tc_id"].replace(":", "-") + ".html"
-                with open(zip_dir / file_name, "w", encoding="utf-8") as file:
-                    file.write(html)
-                    CommonUtil.ExecLog(sModuleInfo, "Performance report template generated successfully!", 1)
-                CommonUtil.processed_performance_data.clear()
-                perf_report_html = open(zip_dir / file_name, 'rb')
 
             for _ in range(5):
                 try:
@@ -1800,8 +1737,6 @@ def download_attachments(testcase_info):
         elif "global_folder" in attachment["path"]:
             download_dir = attachment_path / "global"
 
-        if not download_dir.exists():
-            CommonUtil.ExecLog(sModuleInfo, f"Creating folder: {download_dir}", 5)
 
         download_dir.mkdir(parents=True, exist_ok=True)
 
@@ -1896,7 +1831,6 @@ def main(device_dict, all_run_id_info):
 
             # Write testcase json
             path = ConfigModule.get_config_value("sectionOne", "temp_run_file_path", temp_ini_file) / Path(run_id.replace(":", "-"))
-            CommonUtil.ExecLog(sModuleInfo, f"Creating folder: {path}", 5)
             FL.CreateFolder(path)
 
             if run_id.lower().startswith("debug"):
@@ -1989,6 +1923,9 @@ def main(device_dict, all_run_id_info):
 
             if not shared.Test_Shared_Variables("zeuz_collect_browser_log"):
                 shared.Set_Shared_Variables("zeuz_collect_browser_log", "on")
+
+            if not shared.Test_Shared_Variables("zeuz_enable_variable_logging"):
+                shared.Set_Shared_Variables("zeuz_enable_variable_logging", "False")
 
             shared.Set_Shared_Variables("run_id", run_id)
             shared.Set_Shared_Variables("node_id", CommonUtil.MachineInfo().getLocalUser())
@@ -2134,7 +2071,7 @@ def main(device_dict, all_run_id_info):
                                 sModuleInfo, "Performance Test Results Uploaded Successfully", 1
                             )
                         except Exception as e:
-                            CommonUtil.ExecLog(sModuleInfo, e, 3)
+                            CommonUtil.ExecLog(sModuleInfo, str(e), 3)
                             run_test_case(
                                 test_case_no,
                                 sModuleInfo,
@@ -2185,8 +2122,6 @@ def main(device_dict, all_run_id_info):
                     "duration": TestSetDuration
                 }
                 CommonUtil.CreateJsonReport(setInfo=after_execution_dict)
-
-                CommonUtil.generate_time_based_performance_report(each_session)
 
                 # Complete all step_reports and then send tc report
                 if "step_report" in CommonUtil.all_threads:
@@ -2244,8 +2179,6 @@ def main(device_dict, all_run_id_info):
             CommonUtil.run_cancelled = False
             if ConfigModule.get_config_value("RunDefinition", "local_run") == "True":
                 input("[Local run] Press any key to finish")
-
-            break   # Todo: remove this after server side multiple run-id problem is fixed
 
         return "pass"
     except:

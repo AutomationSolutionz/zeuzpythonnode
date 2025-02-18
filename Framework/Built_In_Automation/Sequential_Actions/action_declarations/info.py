@@ -9,7 +9,8 @@ from . import (
     windows,
     xml,
     database,
-    performance
+    performance,
+    security,
 )
 
 modules = (
@@ -22,7 +23,8 @@ modules = (
     windows,
     xml,
     database,
-    performance
+    performance,
+    security,
 )
 
 # This will be exported and contains all the actions.
@@ -90,9 +92,24 @@ action_support = (
     "text classifier offset"
     "fail message",
 )
+
+#Old one
+# patterns = [
+#     r'^sr *(src |source |dst |destination |desired )?(parent|sibling|child|next|following|previous|preceding) (\d+ )*parameter$',
+#     r'^sr *(src |source |dst |destination |desired )?element parameter$',
+# ]
+
+
+#New one 
 patterns = [
-    r'^sr *(src |source |dst |destination |desired )?(parent|sibling|child|next|following|previous|preceding) (\d )*parameter$',
-    r'^sr *(src |source |dst |destination |desired )?element parameter$',
+    r'^(sr\s+)?'  # Optional 'sr' prefix followed by one or more spaces
+    r'(src |source |dst |destination |desired )?'
+    r'(parent|sibling|child|next|following|previous|preceding)'
+    r'( \d+)? parameter$',  # Optional numeric index and ends with 'parameter'
+
+    r'^(sr\s+)?'  # Optional 'sr' prefix
+    r'(src |source |dst |destination |desired )?'
+    r'element parameter$',
 ]
 
 # List of supported mobile platforms - must be lower case

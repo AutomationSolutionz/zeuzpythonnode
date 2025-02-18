@@ -63,5 +63,10 @@ thefuzz
 genson
 google-cloud-storage
 mitmproxy
+wapiti3
+tabulate
+plyer
+notify_py
+
 jinja2
 spyne
